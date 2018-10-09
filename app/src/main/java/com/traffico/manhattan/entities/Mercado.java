@@ -1,4 +1,4 @@
-package com.traffico.manhattan.clases;
+package com.traffico.manhattan.entities;
 
 import java.util.Date;
 
