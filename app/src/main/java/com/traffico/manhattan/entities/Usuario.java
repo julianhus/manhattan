@@ -13,15 +13,13 @@ public class Usuario {
     private String googleUsuario;
     private List<Mercado> mercados;
 
-    public Usuario(int idUsuario, String nombreUsuario, String apellidoUsuario, String emailUsuario) {
-        this.idUsuario = idUsuario;
+    public Usuario(String nombreUsuario, String apellidoUsuario, String emailUsuario) {
         this.nombreUsuario = nombreUsuario;
         this.apellidoUsuario = apellidoUsuario;
         this.emailUsuario = emailUsuario;
     }
 
-    public Usuario(int idUsuario, String nombreUsuario, String apellidoUsuario, String direccionUsuario, String coordenadasUsuario, String emailUsuario, String facebookUsuario, String googleUsuario) {
-        this.idUsuario = idUsuario;
+    public Usuario(String nombreUsuario, String apellidoUsuario, String direccionUsuario, String coordenadasUsuario, String emailUsuario, String facebookUsuario, String googleUsuario) {
         this.nombreUsuario = nombreUsuario;
         this.apellidoUsuario = apellidoUsuario;
         this.direccionUsuario = direccionUsuario;
@@ -102,4 +100,5 @@ public class Usuario {
     public void setMercados(List<Mercado> mercados) {
         this.mercados = mercados;
     }
+
 }

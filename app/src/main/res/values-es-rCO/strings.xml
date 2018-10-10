@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Manhattan</string>
+    <string name="tuwya">Cuentanos quien eres ...</string>
+    <string name="yn">Tu nombre</string>
+    <string name="yln">Tu apellido</string>
+    <string name="ya">Tu dirección</string>
+    <string name="yl">Tu hubicación</string>
+    <string name="ye">Tu eMail</string>
+    <string name="yf">Tu Facebook</string>
+    <string name="yg">Tu Google</string>
+    <string name="si">Registrate</string>
+</resources>

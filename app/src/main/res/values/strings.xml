@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Manhattan</string>
+    <string name="tuwya">Tell us who you are ...</string>
+    <string name="yn">Your name</string>
+    <string name="yln">Your last name</string>
+    <string name="ya">Your address</string>
+    <string name="yl">Your location</string>
+    <string name="ye">Your eMail</string>
+    <string name="yf">Your Facebook</string>
+    <string name="yg">Your Google</string>
+    <string name="si">Sing In</string>
+    <string name="facebook_app_id" translatable="false">388208711715546</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb388208711715546</string>
+
 </resources>
