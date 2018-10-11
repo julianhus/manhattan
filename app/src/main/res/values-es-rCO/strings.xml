@@ -10,4 +10,8 @@
     <string name="yf">Tu Facebook</string>
     <string name="yg">Tu Google</string>
     <string name="si">Registrate</string>
+    <string name="title_activity_menu">Menu</string>
+    <string name="title_home">Principal</string>
+    <string name="title_notifications">Notificaciones</string>
+    <string name="title_dashboard">Tablero</string>
 </resources>

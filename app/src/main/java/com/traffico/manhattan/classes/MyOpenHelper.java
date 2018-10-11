@@ -74,8 +74,8 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertUser(SQLiteDatabase db, EditText eTName, EditText eTLastName, EditText eTAddress, EditText eTLocation, EditText eTEMail) {
-        Usuario usuario = new Usuario(eTName.getText().toString(), eTLastName.getText().toString(), eTAddress.getText().toString(), eTLocation.getText().toString(), eTEMail.getText().toString(), null, null);
+    public void insertUser(SQLiteDatabase db, EditText eTName, EditText eTLastName, EditText eTAddress, EditText eTLocation, EditText eTEMail, String userIdFacebook) {
+        Usuario usuario = new Usuario(eTName.getText().toString(), eTLastName.getText().toString(), eTAddress.getText().toString(), eTLocation.getText().toString(), eTEMail.getText().toString(), userIdFacebook, null);
         ContentValues cv = new ContentValues();
         cv.put("nombre_usuario", usuario.getNombreUsuario());
         cv.put("apellido_usuario", usuario.getApellidoUsuario());
