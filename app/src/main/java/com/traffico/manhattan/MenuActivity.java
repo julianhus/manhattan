@@ -1,13 +1,12 @@
 package com.traffico.manhattan;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -23,21 +22,14 @@ public class MenuActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     //
-                    //Paso 1: Obtener la instancia del administrador de fragmentos
-                    FragmentManager fragmentManager = getFragmentManager();
-
-                    //Paso 2: Crear una nueva transacción
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-                    //Paso 3: Crear un nuevo fragmento y añadirlo
-                    HomeFragment fragment = new HomeFragment();
-                    transaction.add(R.id.container, fragment);
-                    //Paso 4: Confirmar el cambio
-                    transaction.commit();
-                    setContentView(R.layout.activity_menu);
+                    loadFragment(new HomeFragment());
+                    //
                     mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_dashboard:
+                    //
+                    loadFragment(new SecondFragment());
+                    //
                     mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_notifications:
@@ -56,9 +48,20 @@ public class MenuActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        loadFragment(new FirstFragment());
     }
 
     @Override
     public void onBackPressed() {
+    }
+
+    private void loadFragment(Fragment fragment) {
+// create a FragmentManager
+        FragmentManager fm = getFragmentManager();
+// create a FragmentTransaction to begin the transaction and replace the Fragment
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+// replace the FrameLayout with new Fragment
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit(); // save the changes
     }
 }

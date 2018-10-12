@@ -29,6 +29,10 @@ public class Usuario {
         this.googleUsuario = googleUsuario;
     }
 
+    public Usuario() {
+
+    }
+
     public int getIdUsuario() {
         return idUsuario;
     }

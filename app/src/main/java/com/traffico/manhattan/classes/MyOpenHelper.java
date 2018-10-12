@@ -87,4 +87,21 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         db.insert("usuario", null, cv);
 
     }
+
+    public Usuario getUsuario(SQLiteDatabase db) {
+        Usuario usuario = new Usuario();
+        Cursor cursor = db.rawQuery(QRY_SEARCH_USER, null);
+        while (cursor.moveToNext()) {
+            usuario.setIdUsuario(cursor.getInt(0));
+            usuario.setNombreUsuario(cursor.getString(1));
+            usuario.setApellidoUsuario(cursor.getString(2));
+            usuario.setDireccionUsuario(cursor.getString(3));
+            usuario.setCoordenadasUsuario(cursor.getString(4));
+            usuario.setEmailUsuario(cursor.getString(5));
+            usuario.setFacebookUsuario(cursor.getString(6));
+            usuario.setGoogleUsuario(cursor.getString(7));
+            cursor.moveToLast();
+        }
+        return usuario;
+    }
 }
