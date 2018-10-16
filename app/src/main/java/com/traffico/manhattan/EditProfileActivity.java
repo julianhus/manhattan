@@ -1,11 +1,14 @@
 package com.traffico.manhattan;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.traffico.manhattan.classes.MyOpenHelper;
 import com.traffico.manhattan.entities.Usuario;
@@ -18,22 +21,16 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        //
-        TextView id = findViewById(R.id.tVId);
-        id.setEnabled(false);
-
         MyOpenHelper dbHelper = new MyOpenHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db != null) {
             Usuario usuario = new Usuario();
             usuario = dbHelper.getUsuario(db);
-            id = findViewById(R.id.tVId);
             EditText name = findViewById(R.id.eTName);
             EditText lastName = findViewById(R.id.eTLastName);
             EditText address = findViewById(R.id.eTAddress);
             EditText location = findViewById(R.id.eTLocation);
             EditText email = findViewById(R.id.eTEMail);
-            id.setText(usuario.getIdUsuario() + "");
             name.setText(usuario.getNombreUsuario());
             lastName.setText(usuario.getApellidoUsuario());
             address.setText(usuario.getDireccionUsuario());
@@ -49,18 +46,33 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public void upDate(View view) {
         Usuario usuario = new Usuario();
-        TextView id = findViewById(R.id.tVId);
-        usuario.setIdUsuario((Integer.parseInt(id.getText().toString())));
         EditText name = findViewById(R.id.eTName);
         usuario.setNombreUsuario(name.getText().toString());
         EditText lastName = findViewById(R.id.eTName);
-        usuario.setNombreUsuario(lastName.getText().toString());
+        usuario.setApellidoUsuario(lastName.getText().toString());
         EditText address = findViewById(R.id.eTAddress);
-        usuario.setNombreUsuario(address.getText().toString());
+        usuario.setDireccionUsuario(address.getText().toString());
         EditText location = findViewById(R.id.eTLocation);
-        usuario.setNombreUsuario(location.getText().toString());
+        usuario.setCoordenadasUsuario(location.getText().toString());
         EditText email = findViewById(R.id.eTEMail);
-        usuario.setNombreUsuario(email.getText().toString());
+        usuario.setEmailUsuario(email.getText().toString());
+        //
+        MyOpenHelper dbHelper = new MyOpenHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if (db != null) {
+            dbHelper.updateUser(db, usuario);
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.ua, Toast.LENGTH_SHORT);
+            toast.show();
+            final Intent mainActivity = new Intent(this, MainActivity.class);
+            //
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Magic here
+                    startActivity(mainActivity);
+                }
+            }, 1000); // Millisecond 1000 = 1 sec
+        }
 
     }
 }

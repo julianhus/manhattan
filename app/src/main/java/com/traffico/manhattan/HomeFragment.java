@@ -13,7 +13,8 @@ public class HomeFragment extends Fragment {
 
 
     View view;
-    Button firstButton;
+    Button profileButton;
+    Button storeButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -21,14 +22,23 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
         // get the reference of Button
-        firstButton = (Button) view.findViewById(R.id.bProfile);
+        profileButton = (Button) view.findViewById(R.id.bProfile);
         // perform setOnClickListener on first Button
-        firstButton.setOnClickListener(new View.OnClickListener() {
+        profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // display a message by using a Toast
-                Toast.makeText(getActivity(), "Home Fragment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Edit Profile", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+        storeButton = (Button) view.findViewById(R.id.bStore);
+        storeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Store", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), StoreActivity.class);
                 getActivity().startActivity(intent);
             }
         });

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.Handler;
+import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 //
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -27,6 +30,9 @@ import com.traffico.manhattan.classes.MyOpenHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,9 +67,11 @@ public class MainActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
         //
         callbackManager = CallbackManager.Factory.create();
+
         //
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
+
 
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -163,8 +171,18 @@ public class MainActivity extends AppCompatActivity {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             if (db != null) {
                 dbHelper.insertUser(db, eTName, eTLastName, eTAddress, eTLocation, eTEMail, userIdFacebook);
-                Intent mainActivity = new Intent(this, MainActivity.class);
-                startActivity(mainActivity);
+                Toast toast = Toast.makeText(getApplicationContext(), "Usuario Registrado", Toast.LENGTH_SHORT);
+                toast.show();
+                final Intent mainActivity = new Intent(this, MainActivity.class);
+                //
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Magic here
+                        startActivity(mainActivity);
+                    }
+                }, 1000); // Millisecond 1000 = 1 sec
+                //
             }
 
         }

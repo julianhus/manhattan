@@ -16,4 +16,7 @@
     <string name="title_dashboard">Tablero</string>
     <string name="profile">Perfil</string>
     <string name="ud">Actualiza</string>
+    <string name="ua">Usuario Actualizado</string>
+    <string name="store">Tienda</string>
+    <string name="product">Producto</string>
 </resources>

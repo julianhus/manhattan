@@ -17,4 +17,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="profile">Profile</string>
     <string name="ud">Update</string>
+    <string name="ua">Profile Updated</string>
+    <string name="store">Store</string>
+    <string name="product">Product</string>
 </resources>
