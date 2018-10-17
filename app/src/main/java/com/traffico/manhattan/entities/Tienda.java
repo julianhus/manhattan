@@ -27,6 +27,10 @@ public class Tienda {
         this.municipio = municipio;
     }
 
+    public Tienda() {
+
+    }
+
     public int getIdTienda() {
         return idTienda;
     }

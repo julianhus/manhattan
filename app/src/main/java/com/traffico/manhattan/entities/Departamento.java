@@ -14,6 +14,10 @@ public class Departamento {
         this.descDepartamento = descDepartamento;
     }
 
+    public Departamento() {
+
+    }
+
     public int getIdDepartamento() {
         return idDepartamento;
     }

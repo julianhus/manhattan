@@ -20,4 +20,10 @@
     <string name="ua">Profile Updated</string>
     <string name="store">Store</string>
     <string name="product">Product</string>
+    <string name="ne">New Store</string>
+    <string name="ds">Description</string>
+    <string name="as">Address</string>
+    <string name="ls">Location</string>
+    <string name="cs">City</string>
+    <string name="ss">State</string>
 </resources>

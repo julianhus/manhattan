@@ -19,4 +19,10 @@
     <string name="ua">Usuario Actualizado</string>
     <string name="store">Tienda</string>
     <string name="product">Producto</string>
+    <string name="ne">Nueva Tienda</string>
+    <string name="ds">Nombre</string>
+    <string name="as">Dirección</string>
+    <string name="ls">Hubicación</string>
+    <string name="cs">Ciudad</string>
+    <string name="ss">Departamento</string>
 </resources>
