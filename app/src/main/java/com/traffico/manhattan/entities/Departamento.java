@@ -42,4 +42,8 @@ public class Departamento {
         this.municipios = municipios;
     }
 
+    @Override
+    public String toString() {
+        return descDepartamento;
+    }
 }

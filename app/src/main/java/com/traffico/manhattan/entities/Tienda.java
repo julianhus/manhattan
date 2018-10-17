@@ -12,7 +12,6 @@ public class Tienda {
     private List<Producto> productos;
 
 
-
     public Tienda(int idTienda, String descTienda, Municipio municipio) {
         this.idTienda = idTienda;
         this.descTienda = descTienda;
@@ -77,5 +76,10 @@ public class Tienda {
 
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
+    }
+
+    @Override
+    public String toString() {
+        return descTienda + ", " + direccionTienda;
     }
 }

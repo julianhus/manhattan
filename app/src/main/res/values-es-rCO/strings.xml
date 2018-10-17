@@ -25,4 +25,5 @@
     <string name="ls">Hubicación</string>
     <string name="cs">Ciudad</string>
     <string name="ss">Departamento</string>
+    <string name="select">Seleccionar</string>
 </resources>

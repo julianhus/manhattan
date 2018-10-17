@@ -50,4 +50,9 @@ public class Municipio {
     public void setTiendas(List<Tienda> tiendas) {
         this.tiendas = tiendas;
     }
+
+    @Override
+    public String toString() {
+        return descMunicipio;
+    }
 }

@@ -5,12 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.traffico.manhattan.MainActivity;
-import com.traffico.manhattan.R;
 import com.traffico.manhattan.entities.Departamento;
 import com.traffico.manhattan.entities.Municipio;
 import com.traffico.manhattan.entities.Tienda;
@@ -27,6 +23,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
     private static final String QRY_SEARCH_USER = "select * from usuario";
     private static final String QRY_INSERT_USER = "insert into usuario (?,?,?,?,?,?,?)";
     private static final String QRY_SEARCH_STORE = "select * from tienda t left outer join municipio m on m.id_municipio = t.id_municipio left outer join departamento d on d.id_departamento = m.id_departamento";
+    private static final String QRY_SEARCH_STATE = "select d.id_departamento, d.desc_departamento, m.id_departamento, m.id_municipio, m.desc_municipio from departamento d left outer join municipio m on m.id_departamento = d.id_departamento";
 
     public MyOpenHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -85,7 +82,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
 
     public Usuario getUsuario(SQLiteDatabase db) {
         Usuario usuario = new Usuario();
-        Cursor cursor = db.rawQuery(QRY_SEARCH_STORE, null);
+        Cursor cursor = db.rawQuery(QRY_SEARCH_USER, null);
         while (cursor.moveToNext()) {
             usuario.setIdUsuario(cursor.getInt(0));
             usuario.setNombreUsuario(cursor.getString(1));
@@ -131,4 +128,84 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
         }
         return tiendas;
     }
+
+    public ArrayList<Departamento> getDepartamentos(SQLiteDatabase db) {
+        ArrayList<Departamento> departamentos = new ArrayList<>();
+        ArrayList<Municipio> municipios = new ArrayList<>();
+        Cursor cursor = db.rawQuery(QRY_SEARCH_STATE, null);
+        int flagStateChange = 0;
+        Departamento departamento = new Departamento();
+        Municipio municipio = new Municipio();
+        while (cursor.moveToNext()) {
+            if(cursor.getInt(0) == flagStateChange || flagStateChange == 0){
+                departamento = new Departamento();
+                departamento.setIdDepartamento(cursor.getInt(0));
+                departamento.setDescDepartamento(cursor.getString(1));
+                municipio = new Municipio();
+                municipio.setDepartamento(departamento);
+                municipio.setIdMunicipio(cursor.getInt(3));
+                municipio.setDescMunicipio(cursor.getString(4));
+                municipios.add(municipio);
+                flagStateChange = departamento.getIdDepartamento();
+            }else{
+                departamento.setMunicipios(municipios);
+                departamentos.add(departamento);
+                departamento = new Departamento();
+                departamento.setIdDepartamento(cursor.getInt(0));
+                departamento.setDescDepartamento(cursor.getString(1));
+                municipios = new ArrayList<>();
+                municipio = new Municipio();
+                municipio.setDepartamento(departamento);
+                municipio.setIdMunicipio(cursor.getInt(3));
+                municipio.setDescMunicipio(cursor.getString(4));
+                municipios.add(municipio);
+                flagStateChange = departamento.getIdDepartamento();
+            }
+            if(cursor.isLast()){
+                departamento.setMunicipios(municipios);
+                departamentos.add(departamento);
+            }
+        }
+        return departamentos;
+    }
+
+
+    public boolean insertTienda(SQLiteDatabase db, Tienda tienda) {
+        return false;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
