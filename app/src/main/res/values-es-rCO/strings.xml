@@ -26,4 +26,6 @@
     <string name="cs">Ciudad</string>
     <string name="ss">Departamento</string>
     <string name="select">Seleccionar</string>
+    <string name="redInfo">Revisa los campos en rojo</string>
+    <string name="create">Creado!</string>
 </resources>

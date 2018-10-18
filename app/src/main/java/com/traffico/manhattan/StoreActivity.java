@@ -1,5 +1,6 @@
 package com.traffico.manhattan;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -115,17 +116,19 @@ public class StoreActivity extends AppCompatActivity {
     }
 
     public void newStore(View view) {
-
+        eTDescription = findViewById(R.id.eTDescription);
+        eTAddress = findViewById(R.id.eTAddress);
+        eTLocation = findViewById(R.id.eTLocation);
+        tvDescription=findViewById(R.id.tVDescStore);
+        tvAddress=findViewById(R.id.tVAddress);
+        tvLocation=findViewById(R.id.tVLocation);
         if (eTDescription.getText().toString().isEmpty() && eTAddress.getText().toString().isEmpty() && eTLocation.getText().toString().isEmpty()) {
             tvDescription.setTextColor(Color.rgb(200, 0, 0));
             tvAddress.setTextColor(Color.rgb(200, 0, 0));
             tvLocation.setTextColor(Color.rgb(200, 0, 0));
+            Toast.makeText(getBaseContext(), R.string.redInfo, Toast.LENGTH_SHORT).show();
         } else {
-
             Tienda tienda = new Tienda();
-            eTDescription = findViewById(R.id.eTDescription);
-            eTAddress = findViewById(R.id.eTAddress);
-            eTLocation = findViewById(R.id.eTLocation);
             tienda.setDescTienda(eTDescription.getText().toString());
             tienda.setDireccionTienda(eTAddress.getText().toString());
             tienda.setCoordenadasTienda(eTLocation.getText().toString());
@@ -133,7 +136,11 @@ public class StoreActivity extends AppCompatActivity {
             MyOpenHelper dbHelper = new MyOpenHelper(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             if (db != null) {
-                boolean flagInsert = dbHelper.insertTienda(db, tienda);
+                long flagInsert = dbHelper.insertTienda(db, tienda);
+                Toast.makeText(getBaseContext(), R.string.create, Toast.LENGTH_SHORT).show();
+                Intent storeIntent = new Intent(this,StoreActivity.class);
+                startActivity(storeIntent);
+
             }
         }
     }

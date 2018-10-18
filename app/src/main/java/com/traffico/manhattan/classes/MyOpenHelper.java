@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.traffico.manhattan.entities.Departamento;
@@ -170,8 +171,13 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
     }
 
 
-    public boolean insertTienda(SQLiteDatabase db, Tienda tienda) {
-        return false;
+    public long insertTienda(SQLiteDatabase db, Tienda tienda) {
+        ContentValues cv = new ContentValues();
+        cv.put("desc_tienda",tienda.getDescTienda());
+        cv.put("direccion_tienda",tienda.getDireccionTienda());
+        cv.put("coordenadas_tienda",tienda.getCoordenadasTienda());
+        cv.put("id_municipio",tienda.getMunicipio().getIdMunicipio());
+        return db.insert("tienda",null,cv);
     }
 }
 
