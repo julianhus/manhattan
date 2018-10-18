@@ -48,8 +48,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), R.string.product, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getActivity(), ProductActivity.class);
-                getActivity().startActivity(intent);
             }
         });
         return view;
