@@ -23,7 +23,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
     //
     private static final String QRY_SEARCH_USER = "select * from usuario";
     private static final String QRY_INSERT_USER = "insert into usuario (?,?,?,?,?,?,?)";
-    private static final String QRY_SEARCH_STORE = "select * from tienda t left outer join municipio m on m.id_municipio = t.id_municipio left outer join departamento d on d.id_departamento = m.id_departamento";
+    private static final String QRY_SEARCH_STORE = "select t.id_tienda, t.desc_tienda, t.direccion_tienda, t.coordenadas_tienda, m.id_municipio, m.desc_municipio, d.id_departamento, d.desc_departamento from tienda t left outer join municipio m on m.id_municipio = t.id_municipio left outer join departamento d on d.id_departamento = m.id_departamento";
     private static final String QRY_SEARCH_STATE = "select d.id_departamento, d.desc_departamento, m.id_departamento, m.id_municipio, m.desc_municipio from departamento d left outer join municipio m on m.id_departamento = d.id_departamento";
 
     public MyOpenHelper(Context context) {
@@ -138,7 +138,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
         Departamento departamento = new Departamento();
         Municipio municipio = new Municipio();
         while (cursor.moveToNext()) {
-            if(cursor.getInt(0) == flagStateChange || flagStateChange == 0){
+            if (cursor.getInt(0) == flagStateChange || flagStateChange == 0) {
                 departamento = new Departamento();
                 departamento.setIdDepartamento(cursor.getInt(0));
                 departamento.setDescDepartamento(cursor.getString(1));
@@ -148,7 +148,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
                 municipio.setDescMunicipio(cursor.getString(4));
                 municipios.add(municipio);
                 flagStateChange = departamento.getIdDepartamento();
-            }else{
+            } else {
                 departamento.setMunicipios(municipios);
                 departamentos.add(departamento);
                 departamento = new Departamento();
@@ -162,7 +162,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
                 municipios.add(municipio);
                 flagStateChange = departamento.getIdDepartamento();
             }
-            if(cursor.isLast()){
+            if (cursor.isLast()) {
                 departamento.setMunicipios(municipios);
                 departamentos.add(departamento);
             }
@@ -173,11 +173,20 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
 
     public long insertTienda(SQLiteDatabase db, Tienda tienda) {
         ContentValues cv = new ContentValues();
-        cv.put("desc_tienda",tienda.getDescTienda());
-        cv.put("direccion_tienda",tienda.getDireccionTienda());
-        cv.put("coordenadas_tienda",tienda.getCoordenadasTienda());
-        cv.put("id_municipio",tienda.getMunicipio().getIdMunicipio());
-        return db.insert("tienda",null,cv);
+        cv.put("desc_tienda", tienda.getDescTienda());
+        cv.put("direccion_tienda", tienda.getDireccionTienda());
+        cv.put("coordenadas_tienda", tienda.getCoordenadasTienda());
+        cv.put("id_municipio", tienda.getMunicipio().getIdMunicipio());
+        return db.insert("tienda", null, cv);
+    }
+
+    public int updateTienda(SQLiteDatabase db, Tienda tienda) {
+        ContentValues cv = new ContentValues();
+        cv.put("desc_tienda", tienda.getDescTienda());
+        cv.put("direccion_tienda", tienda.getDireccionTienda());
+        cv.put("coordenadas_tienda", tienda.getCoordenadasTienda());
+        cv.put("id_municipio", tienda.getMunicipio().getIdMunicipio());
+        return db.update("tienda", cv, " id_tienda = ?", new String[]{String.valueOf(tienda.getIdTienda())});
     }
 }
 

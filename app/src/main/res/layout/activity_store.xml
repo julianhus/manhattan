@@ -34,6 +34,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eTDescription" />
 
+    <Button
+        android:id="@+id/bUpdateStore"
+        android:layout_width="379dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:enabled="true"
+        android:onClick="updateStore"
+        android:text="@string/us"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eTDescription" />
+
     <TextView
         android:id="@+id/tVDescStore"
         android:layout_width="wrap_content"

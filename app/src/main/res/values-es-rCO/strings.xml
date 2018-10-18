@@ -28,4 +28,10 @@
     <string name="select">Seleccionar</string>
     <string name="redInfo">Revisa los campos en rojo</string>
     <string name="create">Creado!</string>
+    <string name="us">Actualiza la Tienda</string>
+    <string name="update">Actualizado!</string>
+    <string name="wait">\"Espera ... \"</string>
+    <string name="aygtut">Vas a actualizar eso?</string>
+    <string name="y">Si</string>
+    <string name="editprofile">Editar Perfil</string>
 </resources>

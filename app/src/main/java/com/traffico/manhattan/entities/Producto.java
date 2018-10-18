@@ -76,4 +76,14 @@ public class Producto {
     public void setMercados(List<Mercado> mercados) {
         this.mercados = mercados;
     }
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "idProducto=" + idProducto +
+                ", barCode=" + barCode +
+                ", marca='" + marca + '\'' +
+                ", descProducto='" + descProducto + '\'' +
+                '}';
+    }
 }
