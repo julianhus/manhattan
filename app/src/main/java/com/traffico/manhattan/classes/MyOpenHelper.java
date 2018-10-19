@@ -37,6 +37,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
         db.execSQL(MUNICIPIO_INDEX_CREATE);
         db.execSQL(TIENDA_TABLE_CREATE);
         db.execSQL(TIENDA_INDEX_CREATE);
+        db.execSQL(TIENDA_UNIQUE_CREATE_DIRECCION);
         db.execSQL(PRODUCTO_TABLE_CREATE);
         db.execSQL(PRODUCTO_INDEX_UNIQUE_CREATE);
         db.execSQL(PRODUCTO_INDEX_CREATE);
@@ -55,7 +56,6 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 
     public boolean searchUser(SQLiteDatabase db) {

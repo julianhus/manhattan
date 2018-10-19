@@ -5,20 +5,27 @@ import java.util.List;
 public class Producto {
 
     private int idProducto;
-    private int barCode;
+    private String barCode;
     private String marca;
     private String descProducto;
     private Tienda tienda;
     private List<ValorProducto> valorProductos;
     private List<Mercado> mercados;
 
-    public Producto(int idProducto, int barCode, String marca, String descProducto, Tienda tienda, List<ValorProducto> valorProductos) {
+    public Producto(int idProducto, String barCode, String marca, String descProducto, Tienda tienda, List<ValorProducto> valorProductos) {
         this.idProducto = idProducto;
         this.barCode = barCode;
         this.marca = marca;
         this.descProducto = descProducto;
         this.tienda = tienda;
         this.valorProductos = valorProductos;
+    }
+
+    public Producto(int idProducto, String barCode, String marca, String descProducto) {
+        this.idProducto = idProducto;
+        this.barCode = barCode;
+        this.marca = marca;
+        this.descProducto = descProducto;
     }
 
     public int getIdProducto() {
@@ -29,11 +36,11 @@ public class Producto {
         this.idProducto = idProducto;
     }
 
-    public int getBarCode() {
+    public String getBarCode() {
         return barCode;
     }
 
-    public void setBarCode(int barCode) {
+    public void setBarCode(String barCode) {
         this.barCode = barCode;
     }
 
@@ -79,11 +86,6 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto{" +
-                "idProducto=" + idProducto +
-                ", barCode=" + barCode +
-                ", marca='" + marca + '\'' +
-                ", descProducto='" + descProducto + '\'' +
-                '}';
+        return marca + "/" + descProducto;
     }
 }

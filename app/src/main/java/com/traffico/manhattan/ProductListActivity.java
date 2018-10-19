@@ -14,7 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.traffico.manhattan.dummy.DummyContent;
+import com.traffico.manhattan.classes.ProductContent;
+import com.traffico.manhattan.entities.Producto;
 
 import java.util.List;
 
@@ -47,8 +48,9 @@ public class ProductListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Intent intent = new Intent(ProductListActivity.this, ProductActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -66,22 +68,22 @@ public class ProductListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, mTwoPane));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, ProductContent.PRODUCTS, mTwoPane));
     }
 
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final ItemListActivity mParentActivity;
-        private final List<DummyContent.DummyItem> mValues;
+        private final ProductListActivity mParentActivity;
+        private final List<Producto> mValues;
         private final boolean mTwoPane;
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
+                Producto item = (Producto) view.getTag();
                 if (mTwoPane) {
                     Bundle arguments = new Bundle();
-                    arguments.putString(ProductDetailFragment.ARG_ITEM_ID, item.id);
+                    arguments.putInt(ProductDetailFragment.ARG_ITEM_ID, item.getIdProducto());
                     ProductDetailFragment fragment = new ProductDetailFragment();
                     fragment.setArguments(arguments);
                     mParentActivity.getSupportFragmentManager().beginTransaction()
@@ -90,7 +92,7 @@ public class ProductListActivity extends AppCompatActivity {
                 } else {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, ProductDetailActivity.class);
-                    intent.putExtra(ProductDetailFragment.ARG_ITEM_ID, item.id);
+                    intent.putExtra(ProductDetailFragment.ARG_ITEM_ID, item.getIdProducto());
 
                     context.startActivity(intent);
                 }
@@ -98,7 +100,7 @@ public class ProductListActivity extends AppCompatActivity {
         };
 
         SimpleItemRecyclerViewAdapter(ProductListActivity parent,
-                                      List<DummyContent.DummyItem> items,
+                                      List<Producto> items,
                                       boolean twoPane) {
             mValues = items;
             mParentActivity = parent;
@@ -114,8 +116,8 @@ public class ProductListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            holder.mIdView.setText(mValues.get(position).getIdProducto() + "");
+            holder.mContentView.setText(mValues.get(position).getMarca() + "/" + mValues.get(position).getDescProducto());
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);

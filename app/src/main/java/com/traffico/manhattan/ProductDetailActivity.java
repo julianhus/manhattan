@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
+import static com.traffico.manhattan.ProductDetailFragment.ARG_ITEM_ID;
+
 /**
  * An activity representing a single Product detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
@@ -53,8 +55,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ProductDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(ProductDetailFragment.ARG_ITEM_ID));
+            arguments.putInt(ProductDetailFragment.ARG_ITEM_ID, getIntent().getIntExtra(ProductDetailFragment.ARG_ITEM_ID,0));
+            //arguments.putString(ProductDetailFragment.ARG_ITEM_ID,getIntent().getStringExtra(ProductDetailFragment.ARG_ITEM_ID));
             ProductDetailFragment fragment = new ProductDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

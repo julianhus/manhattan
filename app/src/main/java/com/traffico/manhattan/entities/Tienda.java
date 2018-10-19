@@ -12,9 +12,10 @@ public class Tienda {
     private List<Producto> productos;
 
 
-    public Tienda(int idTienda, String descTienda, Municipio municipio) {
+    public Tienda(int idTienda, String descTienda, String direccionTienda, Municipio municipio) {
         this.idTienda = idTienda;
         this.descTienda = descTienda;
+        this.direccionTienda = direccionTienda;
         this.municipio = municipio;
     }
 
