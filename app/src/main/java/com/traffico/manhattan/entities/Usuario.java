@@ -105,4 +105,18 @@ public class Usuario {
         this.mercados = mercados;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", apellidoUsuario='" + apellidoUsuario + '\'' +
+                ", direccionUsuario='" + direccionUsuario + '\'' +
+                ", coordenadasUsuario='" + coordenadasUsuario + '\'' +
+                ", emailUsuario='" + emailUsuario + '\'' +
+                ", facebookUsuario='" + facebookUsuario + '\'' +
+                ", googleUsuario='" + googleUsuario + '\'' +
+                ", mercados=" + mercados +
+                '}';
+    }
 }
