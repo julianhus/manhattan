@@ -34,4 +34,13 @@
     <string name="aygtut">Vas a actualizar eso?</string>
     <string name="y">Si</string>
     <string name="editprofile">Editar Perfil</string>
+    <string name="title_product_list">Productos</string>
+    <string name="title_product_detail">Detalle del producto</string>
+    <string name="bar_code">Codigo de Barras</string>
+    <string name="make">Marca</string>
+    <string name="price">Precio</string>
+    <string name="unit_measure">Unidad de Medida</string>
+    <string name="weight_size_capacity">Peso, Tamaño, Capacidad</string>
+    <string name="equivalent_price">Precio Equivalente</string>
+    <string name="registration_date">Fecha del Registro</string>
 </resources>

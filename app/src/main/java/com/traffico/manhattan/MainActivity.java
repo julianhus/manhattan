@@ -63,86 +63,97 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loginWithFacebook() {
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
-        //
-        callbackManager = CallbackManager.Factory.create();
-
-        //
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email");
-
-
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-                Log.i("onSuccess", "UserId: " + loginResult.getAccessToken().getUserId());
-                Log.i("onSuccess", "Token: " + loginResult.getAccessToken().getToken());
-                Log.i("onSuccess", "Recently Granted Permissions " + loginResult.getRecentlyGrantedPermissions());
-                setFacebookData(loginResult);
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-                Log.i("onCancel", "Cancel");
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-                Log.i("onError", "Error" + exception.getMessage());
-            }
+        try {
+            FacebookSdk.sdkInitialize(getApplicationContext());
+            AppEventsLogger.activateApp(this);
             //
+            callbackManager = CallbackManager.Factory.create();
+
             //
-            private void setFacebookData(final LoginResult loginResult) {
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                // Application code
-                                try {
-                                    Log.i("Response", response.toString());
+            loginButton = (LoginButton) findViewById(R.id.login_button);
+            loginButton.setReadPermissions("email");
 
-                                    String email = response.getJSONObject().getString("email");
-                                    String firstName = response.getJSONObject().getString("first_name");
-                                    String lastName = response.getJSONObject().getString("last_name");
 
-                                    Profile profile = Profile.getCurrentProfile();
-                                    String id = profile.getId();
-                                    String link = profile.getLinkUri().toString();
-                                    Log.i("Link", link);
-                                    if (Profile.getCurrentProfile() != null) {
-                                        Log.i("Login", "ProfilePic" + Profile.getCurrentProfile().getProfilePictureUri(200, 200));
-                                    }
-                                    Log.i("Login" + "Email", email);
-                                    EditText eTEMail = findViewById(R.id.eTEMail);
-                                    eTEMail.setText(email);
-                                    Log.i("Login" + "FirstName", firstName);
-                                    EditText eTName = findViewById(R.id.eTName);
-                                    eTName.setText(firstName);
-                                    Log.i("Login" + "LastName", lastName);
-                                    EditText eTLastName = findViewById(R.id.eTLastName);
-                                    eTLastName.setText(lastName);
-                                    Button singIn = findViewById(R.id.bSingIn);
-                                    userIdFacebook = loginResult.getAccessToken().getUserId().toString();
-                                    singIn.callOnClick();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,email,first_name,last_name");
-                request.setParameters(parameters);
-                request.executeAsync();
+            // Callback registration
+            loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    // App code
+                    Log.i("onSuccess", "UserId: " + loginResult.getAccessToken().getUserId());
+                    Log.i("onSuccess", "Token: " + loginResult.getAccessToken().getToken());
+                    Log.i("onSuccess", "Recently Granted Permissions " + loginResult.getRecentlyGrantedPermissions());
+                    setFacebookData(loginResult);
+                }
+
+                @Override
+                public void onCancel() {
+                    // App code
+                    Log.i("onCancel", "Cancel");
+                }
+
+                @Override
+                public void onError(FacebookException exception) {
+                    // App code
+                    Log.i("onError", "Error" + exception.getMessage());
+                }
+
                 //
-            }
-            //
-        });
+                //
+                private void setFacebookData(final LoginResult loginResult) {
+                    GraphRequest request = GraphRequest.newMeRequest(
+                            loginResult.getAccessToken(),
+                            new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(JSONObject object, GraphResponse response) {
+                                    // Application code
+                                    try {
+                                        Log.i("Response", response.toString());
+
+                                        String email = response.getJSONObject().getString("email");
+                                        String firstName = response.getJSONObject().getString("first_name");
+                                        String lastName = response.getJSONObject().getString("last_name");
+
+                                        Profile profile = Profile.getCurrentProfile();
+                                        //String id = profile.getId();
+                                        String link = profile.getLinkUri().toString();
+                                        Log.i("Link", link);
+                                        if (Profile.getCurrentProfile() != null) {
+                                            Log.i("Login", "ProfilePic" + Profile.getCurrentProfile().getProfilePictureUri(200, 200));
+                                        }
+                                        Log.i("Login" + "Email", email);
+                                        EditText eTEMail = findViewById(R.id.eTEMail);
+                                        eTEMail.setText(email);
+                                        Log.i("Login" + "FirstName", firstName);
+                                        EditText eTName = findViewById(R.id.eTName);
+                                        eTName.setText(firstName);
+                                        Log.i("Login" + "LastName", lastName);
+                                        EditText eTLastName = findViewById(R.id.eTLastName);
+                                        eTLastName.setText(lastName);
+                                        Button singIn = findViewById(R.id.bSingIn);
+                                        userIdFacebook = loginResult.getAccessToken().getUserId().toString();
+                                        singIn.callOnClick();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    } catch (Exception e) {
+                                        Toast toast = Toast.makeText(getApplicationContext(), "Fallo la conexión, Intente nuevamente", Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        Log.e("Error", "loginWithFacebook: " + e.getMessage(), null);
+                                    }
+                                }
+                            });
+                    Bundle parameters = new Bundle();
+                    parameters.putString("fields", "id,email,first_name,last_name");
+                    request.setParameters(parameters);
+                    request.executeAsync();
+                    //
+                }
+                //
+            });
+        } catch (Exception e) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Fallo la conexión, Intente nuevamente", Toast.LENGTH_SHORT);
+            toast.show();
+            Log.e("Error", "loginWithFacebook: " + e.getMessage(), null);
+        }
     }
 
     @Override
@@ -170,21 +181,25 @@ public class MainActivity extends AppCompatActivity {
             MyOpenHelper dbHelper = new MyOpenHelper(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             if (db != null) {
-                dbHelper.insertUser(db, eTName, eTLastName, eTAddress, eTLocation, eTEMail, userIdFacebook);
-                Toast toast = Toast.makeText(getApplicationContext(), "Usuario Registrado", Toast.LENGTH_SHORT);
-                toast.show();
-                final Intent mainActivity = new Intent(this, MainActivity.class);
-                //
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Magic here
-                        startActivity(mainActivity);
-                    }
-                }, 1000); // Millisecond 1000 = 1 sec
-                //
+                Long flagInsert = dbHelper.insertUser(db, eTName, eTLastName, eTAddress, eTLocation, eTEMail, userIdFacebook);
+                if (flagInsert != 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Usuario Registrado", Toast.LENGTH_SHORT);
+                    toast.show();
+                    final Intent mainActivity = new Intent(this, MainActivity.class);
+                    //
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Magic here
+                            startActivity(mainActivity);
+                        }
+                    }, 1000); // Millisecond 1000 = 1 sec
+                    //
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(), "Fallo el Registro", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
-
         }
     }
 }

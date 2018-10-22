@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.traffico.manhattan.entities.Departamento;
 import com.traffico.manhattan.entities.Municipio;
+import com.traffico.manhattan.entities.Producto;
 import com.traffico.manhattan.entities.Tienda;
 import com.traffico.manhattan.entities.Usuario;
 import com.traffico.manhattan.interfaces.StringsCreacion;
@@ -22,7 +23,6 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
     private static final int DB_VERSION = 1;
     //
     private static final String QRY_SEARCH_USER = "select * from usuario";
-    private static final String QRY_INSERT_USER = "insert into usuario (?,?,?,?,?,?,?)";
     private static final String QRY_SEARCH_STORE = "select t.id_tienda, t.desc_tienda, t.direccion_tienda, t.coordenadas_tienda, m.id_municipio, m.desc_municipio, d.id_departamento, d.desc_departamento from tienda t left outer join municipio m on m.id_municipio = t.id_municipio left outer join departamento d on d.id_departamento = m.id_departamento";
     private static final String QRY_SEARCH_STATE = "select d.id_departamento, d.desc_departamento, m.id_departamento, m.id_municipio, m.desc_municipio from departamento d left outer join municipio m on m.id_departamento = d.id_departamento";
 
@@ -32,26 +32,32 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DEPARTAMENTO_TABLE_CREATE);
-        db.execSQL(MUNICIPIO_TABLE_CREATE);
-        db.execSQL(MUNICIPIO_INDEX_CREATE);
-        db.execSQL(TIENDA_TABLE_CREATE);
-        db.execSQL(TIENDA_INDEX_CREATE);
-        db.execSQL(TIENDA_UNIQUE_CREATE_DIRECCION);
-        db.execSQL(PRODUCTO_TABLE_CREATE);
-        db.execSQL(PRODUCTO_INDEX_UNIQUE_CREATE);
-        db.execSQL(PRODUCTO_INDEX_CREATE);
-        db.execSQL(USUARIO_TABLE_CREATE);
-        db.execSQL(USUARIO_UNIUQE_EMAIL);
-        db.execSQL(MERCADO_TABLE_CREATE);
-        db.execSQL(MERCADO_INDEX_CREATE_PRODUCTO);
-        db.execSQL(MERCADO_INDEX_CREATE_USUARIO);
-        db.execSQL(MERCADO_INDEX_UNIQUE_CREATE_USUARIO);
-        db.execSQL(MERCADO_INDEX_UNIQUE_CREATE_PRODUCTO);
-        db.execSQL(VALOR_PRODUCTO_TABLE_CREATE);
-        db.execSQL(MERCADO_INDEX_CREATE_VALOR_PRODUCTO);
-        db.execSQL(CARGA_DEPARTAMENTOS);
-        db.execSQL(CARGA_MUNICIPIOS);
+        try {
+            db.execSQL(DEPARTAMENTO_TABLE_CREATE);
+            db.execSQL(MUNICIPIO_TABLE_CREATE);
+            db.execSQL(MUNICIPIO_INDEX_CREATE);
+            db.execSQL(TIENDA_TABLE_CREATE);
+            db.execSQL(TIENDA_INDEX_CREATE);
+            db.execSQL(TIENDA_UNIQUE_CREATE_DIRECCION);
+            db.execSQL(PRODUCTO_TABLE_CREATE);
+            db.execSQL(PRODUCTO_INDEX_UNIQUE_CREATE);
+            db.execSQL(USUARIO_TABLE_CREATE);
+            db.execSQL(USUARIO_UNIQUE_EMAIL);
+            db.execSQL(MERCADO_TABLE_CREATE);
+            db.execSQL(MERCADO_INDEX_CREATE_PRODUCTO);
+            db.execSQL(MERCADO_INDEX_CREATE_USUARIO);
+            db.execSQL(MERCADO_INDEX_UNIQUE_CREATE_USUARIO);
+            db.execSQL(MERCADO_INDEX_UNIQUE_CREATE_PRODUCTO);
+            db.execSQL(VALOR_PRODUCTO_TABLE_CREATE);
+            db.execSQL(MERCADO_INDEX_CREATE_VALOR_PRODUCTO);
+            db.execSQL(TIENDA_PRODUCTO_CREATE_TABLE);
+            db.execSQL(TIENDA_PRODUCTO_INDEX_TIENDA);
+            db.execSQL(TIENDA_PRODUCTO_INDEX_PRODUCTO);
+            db.execSQL(CARGA_DEPARTAMENTOS);
+            db.execSQL(CARGA_MUNICIPIOS);
+        } catch (Exception e) {
+            Log.e("Error", "onCreate: ",null );
+        }
     }
 
     @Override
@@ -67,7 +73,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
         }
     }
 
-    public void insertUser(SQLiteDatabase db, EditText eTName, EditText eTLastName, EditText eTAddress, EditText eTLocation, EditText eTEMail, String userIdFacebook) {
+    public long insertUser(SQLiteDatabase db, EditText eTName, EditText eTLastName, EditText eTAddress, EditText eTLocation, EditText eTEMail, String userIdFacebook) {
         Usuario usuario = new Usuario(eTName.getText().toString(), eTLastName.getText().toString(), eTAddress.getText().toString(), eTLocation.getText().toString(), eTEMail.getText().toString(), userIdFacebook, null);
         ContentValues cv = new ContentValues();
         cv.put("nombre_usuario", usuario.getNombreUsuario());
@@ -77,8 +83,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
         cv.put("e_mail_usuario", usuario.getEmailUsuario());
         cv.put("facebook", usuario.getFacebookUsuario());
         cv.put("google", usuario.getGoogleUsuario());
-        db.insert("usuario", null, cv);
-
+        return db.insert("usuario", null, cv);
     }
 
     public Usuario getUsuario(SQLiteDatabase db) {
@@ -188,39 +193,20 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
         cv.put("id_municipio", tienda.getMunicipio().getIdMunicipio());
         return db.update("tienda", cv, " id_tienda = ?", new String[]{String.valueOf(tienda.getIdTienda())});
     }
+
+    public Producto getProducto(SQLiteDatabase db, String scanContent) {
+
+        Producto producto = new Producto();
+        String[] args = new String[]{scanContent};
+        Cursor cursor = db.rawQuery(" SELECT * FROM producto WHERE barcode = ? ", args);
+        while (cursor.moveToNext()) {
+            producto.setIdProducto(cursor.getInt(0));
+            producto.setBarCode(cursor.getString(1));
+            producto.setMarca(cursor.getString(2));
+            producto.setDescProducto(cursor.getString(3));
+        }
+        //
+        return producto;
+        //
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
