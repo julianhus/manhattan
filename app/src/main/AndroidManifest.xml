@@ -80,7 +80,8 @@
 
         <activity
             android:name=".ProductActivity"
-            android:parentActivityName=".ProductListActivity">
+            android:parentActivityName=".ProductListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ProductListActivity" />

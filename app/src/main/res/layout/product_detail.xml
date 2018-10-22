@@ -18,13 +18,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Marca:" />
+            android:text="@string/make"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtmarca"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
     <LinearLayout
@@ -35,7 +35,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Descripcion:" />
+            android:text="@string/product"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtdesc"
@@ -53,7 +54,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Codigo de Barras:" />
+            android:text="@string/bar_code"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtbarcode"
@@ -62,5 +64,10 @@
             />
 
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvValorProducto"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp" />
 
 </LinearLayout>

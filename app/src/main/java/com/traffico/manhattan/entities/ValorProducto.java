@@ -28,6 +28,10 @@ public class ValorProducto {
         this.producto = producto;
     }
 
+    public ValorProducto() {
+
+    }
+
     public int getIdProducto() {
         return idProducto;
     }
@@ -82,5 +86,18 @@ public class ValorProducto {
 
     public void setProducto(Producto producto) {
         this.producto = producto;
+    }
+
+    @Override
+    public String toString() {
+        return "ValorProducto{" +
+                "idProducto=" + idProducto +
+                ", valorProducto=" + valorProducto +
+                ", fechaRegistroValor=" + fechaRegistroValor +
+                ", valorProductoEquivalente=" + valorProductoEquivalente +
+                ", medida='" + medida + '\'' +
+                ", valorMedida=" + valorMedida +
+                ", producto=" + producto +
+                '}';
     }
 }

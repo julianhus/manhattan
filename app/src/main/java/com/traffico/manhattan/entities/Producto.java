@@ -66,7 +66,7 @@ public class Producto {
 
 
 
-    public List<ValorProducto> getValorPrpductos() {
+    public List<ValorProducto> getValorProductos() {
         return valorProductos;
     }
 

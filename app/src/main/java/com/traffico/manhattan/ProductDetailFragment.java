@@ -7,10 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.traffico.manhattan.classes.ProductContent;
 import com.traffico.manhattan.entities.Producto;
+import com.traffico.manhattan.entities.Tienda;
+import com.traffico.manhattan.entities.ValorProducto;
+
+import java.util.ArrayList;
 
 /**
  * A fragment representing a single Product detail screen.
@@ -70,8 +76,13 @@ public class ProductDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.txtmarca)).setText(producto.getMarca());
             ((TextView) rootView.findViewById(R.id.txtdesc)).setText(producto.getDescProducto());
             ((TextView) rootView.findViewById(R.id.txtbarcode)).setText(producto.getBarCode());
+            //
+            ArrayList<ValorProducto> lValorProducto = (ArrayList<ValorProducto>) producto.getValorProductos();
+            ArrayAdapter<ValorProducto> aValorProducto = new ArrayAdapter<ValorProducto>(this.getContext(), android.R.layout.simple_list_item_1, lValorProducto);
+            ListView lvValorProducto  = (ListView)rootView.findViewById(R.id.lvValorProducto);
+            lvValorProducto.setAdapter(aValorProducto);
+            //
         }
-
         return rootView;
     }
 }

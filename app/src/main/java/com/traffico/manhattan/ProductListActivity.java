@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.traffico.manhattan.classes.ProductContent;
@@ -39,7 +40,9 @@ public class ProductListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
-
+        //
+        ProductContent.setContext(this);
+        //
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
@@ -63,6 +66,9 @@ public class ProductListActivity extends AppCompatActivity {
         }
 
         View recyclerView = findViewById(R.id.product_list);
+        //
+
+        //
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
     }
@@ -93,7 +99,6 @@ public class ProductListActivity extends AppCompatActivity {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, ProductDetailActivity.class);
                     intent.putExtra(ProductDetailFragment.ARG_ITEM_ID, item.getIdProducto());
-
                     context.startActivity(intent);
                 }
             }

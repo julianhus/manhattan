@@ -13,9 +13,11 @@ import com.traffico.manhattan.entities.Municipio;
 import com.traffico.manhattan.entities.Producto;
 import com.traffico.manhattan.entities.Tienda;
 import com.traffico.manhattan.entities.Usuario;
+import com.traffico.manhattan.entities.ValorProducto;
 import com.traffico.manhattan.interfaces.StringsCreacion;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
 
@@ -25,6 +27,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
     private static final String QRY_SEARCH_USER = "select * from usuario";
     private static final String QRY_SEARCH_STORE = "select t.id_tienda, t.desc_tienda, t.direccion_tienda, t.coordenadas_tienda, m.id_municipio, m.desc_municipio, d.id_departamento, d.desc_departamento from tienda t left outer join municipio m on m.id_municipio = t.id_municipio left outer join departamento d on d.id_departamento = m.id_departamento";
     private static final String QRY_SEARCH_STATE = "select d.id_departamento, d.desc_departamento, m.id_departamento, m.id_municipio, m.desc_municipio from departamento d left outer join municipio m on m.id_departamento = d.id_departamento";
+    private static final String QRY_SEARCH_PRODUCT = "select * from producto";
 
     public MyOpenHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -54,9 +57,41 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
             db.execSQL(TIENDA_PRODUCTO_INDEX_TIENDA);
             db.execSQL(TIENDA_PRODUCTO_INDEX_PRODUCTO);
             db.execSQL(CARGA_DEPARTAMENTOS);
-            db.execSQL(CARGA_MUNICIPIOS);
+            db.execSQL(CARGA_MUNICIPIOS_AMAZONAS);
+            db.execSQL(CARGA_MUNICIPIOS_ANTIOQUIA);
+            db.execSQL(CARGA_MUNICIPIOS_ARAUCA);
+            db.execSQL(CARGA_MUNICIPIOS_ATLANTICO);
+            db.execSQL(CARGA_MUNICIPIOS_BOGOTA);
+            db.execSQL(CARGA_MUNICIPIOS_BOLIVAR);
+            db.execSQL(CARGA_MUNICIPIOS_BOYACÁ);
+            db.execSQL(CARGA_MUNICIPIOS_CALDAS);
+            db.execSQL(CARGA_MUNICIPIOS_CAQUETÁ);
+            db.execSQL(CARGA_MUNICIPIOS_CASANARE);
+            db.execSQL(CARGA_MUNICIPIOS_CAUCA);
+            db.execSQL(CARGA_MUNICIPIOS_CESAR);
+            db.execSQL(CARGA_MUNICIPIOS_CHOCÓ);
+            db.execSQL(CARGA_MUNICIPIOS_CUNDINAMARCA);
+            db.execSQL(CARGA_MUNICIPIOS_CÓRDOBA);
+            db.execSQL(CARGA_MUNICIPIOS_GUAINÍA);
+            db.execSQL(CARGA_MUNICIPIOS_GUAJIRA);
+            db.execSQL(CARGA_MUNICIPIOS_GUAVIARE);
+            db.execSQL(CARGA_MUNICIPIOS_HUILA);
+            db.execSQL(CARGA_MUNICIPIOS_MAGDALENA);
+            db.execSQL(CARGA_MUNICIPIOS_META);
+            db.execSQL(CARGA_MUNICIPIOS_NARIÑO);
+            db.execSQL(CARGA_MUNICIPIOS_NDESANTANDER);
+            db.execSQL(CARGA_MUNICIPIOS_PUTUMAYO);
+            db.execSQL(CARGA_MUNICIPIOS_QUINDIO);
+            db.execSQL(CARGA_MUNICIPIOS_RISARALDA);
+            db.execSQL(CARGA_MUNICIPIOS_SANANDRÉS);
+            db.execSQL(CARGA_MUNICIPIOS_SANTANDER);
+            db.execSQL(CARGA_MUNICIPIOS_SUCRE);
+            db.execSQL(CARGA_MUNICIPIOS_TOLIMA);
+            db.execSQL(CARGA_MUNICIPIOS_VALLEDELCAUCA);
+            db.execSQL(CARGA_MUNICIPIOS_VAUPÉS);
+            db.execSQL(CARGA_MUNICIPIOS_VICHADA);
         } catch (Exception e) {
-            Log.e("Error", "onCreate: ",null );
+            Log.e("Error", "onCreate: " + e.getMessage(), null);
         }
     }
 
@@ -74,16 +109,21 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
     }
 
     public long insertUser(SQLiteDatabase db, EditText eTName, EditText eTLastName, EditText eTAddress, EditText eTLocation, EditText eTEMail, String userIdFacebook) {
-        Usuario usuario = new Usuario(eTName.getText().toString(), eTLastName.getText().toString(), eTAddress.getText().toString(), eTLocation.getText().toString(), eTEMail.getText().toString(), userIdFacebook, null);
-        ContentValues cv = new ContentValues();
-        cv.put("nombre_usuario", usuario.getNombreUsuario());
-        cv.put("apellido_usuario", usuario.getApellidoUsuario());
-        cv.put("direccion_usuario", usuario.getDireccionUsuario());
-        cv.put("coordenadas_usuario", usuario.getCoordenadasUsuario());
-        cv.put("e_mail_usuario", usuario.getEmailUsuario());
-        cv.put("facebook", usuario.getFacebookUsuario());
-        cv.put("google", usuario.getGoogleUsuario());
-        return db.insert("usuario", null, cv);
+        try {
+            Usuario usuario = new Usuario(eTName.getText().toString(), eTLastName.getText().toString(), eTAddress.getText().toString(), eTLocation.getText().toString(), eTEMail.getText().toString(), userIdFacebook, null);
+            ContentValues cv = new ContentValues();
+            cv.put("nombre_usuario", usuario.getNombreUsuario());
+            cv.put("apellido_usuario", usuario.getApellidoUsuario());
+            cv.put("direccion_usuario", usuario.getDireccionUsuario());
+            cv.put("coordenadas_usuario", usuario.getCoordenadasUsuario());
+            cv.put("e_mail_usuario", usuario.getEmailUsuario());
+            cv.put("facebook", usuario.getFacebookUsuario());
+            cv.put("google", usuario.getGoogleUsuario());
+            return db.insert("usuario", null, cv);
+        } catch (Exception e) {
+            Log.e("Error", "insertUser: " + e.getMessage(), null);
+            return -1;
+        }
     }
 
     public Usuario getUsuario(SQLiteDatabase db) {
@@ -195,7 +235,6 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
     }
 
     public Producto getProducto(SQLiteDatabase db, String scanContent) {
-
         Producto producto = new Producto();
         String[] args = new String[]{scanContent};
         Cursor cursor = db.rawQuery(" SELECT * FROM producto WHERE barcode = ? ", args);
@@ -205,8 +244,40 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
             producto.setMarca(cursor.getString(2));
             producto.setDescProducto(cursor.getString(3));
         }
-        //
         return producto;
-        //
+    }
+
+    public List<Producto> getProductos(SQLiteDatabase db) {
+        ArrayList<Producto> productos = new ArrayList<Producto>();
+        Cursor cursor = db.rawQuery(QRY_SEARCH_PRODUCT, null);
+        while (cursor.moveToNext()) {
+            Producto producto = new Producto();
+            producto.setIdProducto(cursor.getInt(0));
+            producto.setBarCode(cursor.getString(1));
+            producto.setMarca(cursor.getString(2));
+            producto.setDescProducto(cursor.getString(3));
+            producto.setValorProducto(getValorProducto(db,producto));
+            productos.add(producto);
+        }
+        return productos;
+    }
+
+    public ArrayList<ValorProducto> getValorProducto(SQLiteDatabase db, Producto producto) {
+        ArrayList<ValorProducto> valorProductos = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select p.id_producto, vp.valor_producto, vp.medida, vp.valor_medida, vp.valor_producto_equivalente, vp.fecha_registro_valor " +
+                " from producto p left outer join valor_producto vp on vp.id_producto = p.id_producto " +
+                " where p.id_producto = " + producto.getIdProducto() +
+                " order by vp.fecha_registro_valor", null);
+        while (cursor.moveToNext()) {
+            ValorProducto valorProducto = new ValorProducto();
+            valorProducto.setIdProducto(cursor.getInt(0));
+            valorProducto.setValorProducto(cursor.getFloat(1));
+            valorProducto.setMedida(cursor.getString(2));
+            valorProducto.setValorMedida(cursor.getFloat(3));
+            valorProducto.setValorProductoEquivalente(cursor.getFloat(4));
+            //valorProducto.setFechaRegistroValor(cursor.getString(5));
+            valorProductos.add(valorProducto);
+        }
+        return valorProductos;
     }
 }

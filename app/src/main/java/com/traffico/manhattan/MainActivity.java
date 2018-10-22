@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             if (db != null) {
                 Long flagInsert = dbHelper.insertUser(db, eTName, eTLastName, eTAddress, eTLocation, eTEMail, userIdFacebook);
-                if (flagInsert != 0) {
+                if (flagInsert > 0) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Usuario Registrado", Toast.LENGTH_SHORT);
                     toast.show();
                     final Intent mainActivity = new Intent(this, MainActivity.class);
