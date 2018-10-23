@@ -41,9 +41,11 @@
     <string name="bar_code">Bar Code</string>
     <string name="make">Make</string>
     <string name="price">Price</string>
-    <string name="unit_measure">Unit Measure</string>
+    <string name="unit_measure">Measure</string>
     <string name="weight_size_capacity">Weight/Size</string>
     <string name="equivalent_price">Equivalent Price</string>
     <string name="registration_date">Registration Date</string>
     <string name="new_product">New Product</string>
+    <string name="shopping">Shopping</string>
+    <string name="product_no_found">Product not found ... Do you want to create it?</string>
 </resources>

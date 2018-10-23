@@ -1,8 +1,9 @@
 package com.traffico.manhattan.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Tienda {
+public class Tienda implements Serializable {
 
     private int idTienda;
     private String descTienda;

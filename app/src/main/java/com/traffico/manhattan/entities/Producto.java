@@ -8,6 +8,8 @@ public class Producto {
     private String barCode;
     private String marca;
     private String descProducto;
+    private String medida;
+    private float valorMedida;
 
     private List<ValorProducto> valorProductos;
     private List<Mercado> mercados;
@@ -64,7 +66,21 @@ public class Producto {
         this.descProducto = descProducto;
     }
 
+    public String getMedida() {
+        return medida;
+    }
 
+    public void setMedida(String medida) {
+        this.medida = medida;
+    }
+
+    public float getValorMedida() {
+        return valorMedida;
+    }
+
+    public void setValorMedida(float valorMedida) {
+        this.valorMedida = valorMedida;
+    }
 
     public List<ValorProducto> getValorProductos() {
         return valorProductos;

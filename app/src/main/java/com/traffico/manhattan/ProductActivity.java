@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.traffico.manhattan.classes.MyOpenHelper;
@@ -20,8 +19,6 @@ import com.traffico.manhattan.google.zxing.integration.android.IntentIntegrator;
 import com.traffico.manhattan.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 
 
 public class ProductActivity extends AppCompatActivity implements OnClickListener {

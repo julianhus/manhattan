@@ -47,15 +47,14 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
             db.execSQL(USUARIO_TABLE_CREATE);
             db.execSQL(USUARIO_UNIQUE_EMAIL);
             db.execSQL(MERCADO_TABLE_CREATE);
-            db.execSQL(MERCADO_INDEX_CREATE_PRODUCTO);
+            db.execSQL(MERCADO_INDEX_CREATE_TIENDA_PRODUCTO);
             db.execSQL(MERCADO_INDEX_CREATE_USUARIO);
-            db.execSQL(MERCADO_INDEX_UNIQUE_CREATE_USUARIO);
-            db.execSQL(MERCADO_INDEX_UNIQUE_CREATE_PRODUCTO);
             db.execSQL(VALOR_PRODUCTO_TABLE_CREATE);
-            db.execSQL(MERCADO_INDEX_CREATE_VALOR_PRODUCTO);
+            db.execSQL(VALOR_PRODUCTO_INDEX_CREATE);
             db.execSQL(TIENDA_PRODUCTO_CREATE_TABLE);
             db.execSQL(TIENDA_PRODUCTO_INDEX_TIENDA);
             db.execSQL(TIENDA_PRODUCTO_INDEX_PRODUCTO);
+            db.execSQL(TIENDA_PRODUCTO_UNIQUE);
             db.execSQL(CARGA_DEPARTAMENTOS);
             db.execSQL(CARGA_MUNICIPIOS_AMAZONAS);
             db.execSQL(CARGA_MUNICIPIOS_ANTIOQUIA);
@@ -264,7 +263,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
 
     public ArrayList<ValorProducto> getValorProducto(SQLiteDatabase db, Producto producto) {
         ArrayList<ValorProducto> valorProductos = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select p.id_producto, vp.valor_producto, vp.medida, vp.valor_medida, vp.valor_producto_equivalente, vp.fecha_registro_valor " +
+        Cursor cursor = db.rawQuery("select p.id_producto, vp.valor_producto, vp.valor_producto_equivalente, vp.fecha_registro_valor " +
                 " from producto p left outer join valor_producto vp on vp.id_producto = p.id_producto " +
                 " where p.id_producto = " + producto.getIdProducto() +
                 " order by vp.fecha_registro_valor", null);
@@ -272,9 +271,7 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
             ValorProducto valorProducto = new ValorProducto();
             valorProducto.setIdProducto(cursor.getInt(0));
             valorProducto.setValorProducto(cursor.getFloat(1));
-            valorProducto.setMedida(cursor.getString(2));
-            valorProducto.setValorMedida(cursor.getFloat(3));
-            valorProducto.setValorProductoEquivalente(cursor.getFloat(4));
+            valorProducto.setValorProductoEquivalente(cursor.getFloat(3));
             //valorProducto.setFechaRegistroValor(cursor.getString(5));
             valorProductos.add(valorProducto);
         }

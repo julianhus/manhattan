@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -27,10 +26,11 @@ public class MenuActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_dashboard:
                     //
-                    loadFragment(new SecondFragment());
+                    loadFragment(new DashboardFragment());
                     //
                     return true;
                 case R.id.navigation_notifications:
+                    loadFragment(new SecondFragment());
                     return true;
             }
             return false;
@@ -41,11 +41,10 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setSelectedItemId(navigation.getMenu().getItem(1).getItemId());
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        loadFragment(new HomeFragment());
+        loadFragment(new DashboardFragment());
     }
 
     @Override

@@ -8,8 +8,6 @@ public class ValorProducto {
     private float valorProducto;
     private Date fechaRegistroValor;
     private float valorProductoEquivalente;
-    private String medida;
-    private float valorMedida;
     private Producto producto;
 
     public ValorProducto(int idProducto, float valorProducto, Date fechaRegistroValor) {
@@ -18,13 +16,11 @@ public class ValorProducto {
         this.fechaRegistroValor = fechaRegistroValor;
     }
 
-    public ValorProducto(int idProducto, float valorProducto, Date fechaRegistroValor, float valorProductoEquivalente, String medida, float valorMedida, Producto producto) {
+    public ValorProducto(int idProducto, float valorProducto, Date fechaRegistroValor, float valorProductoEquivalente, Producto producto) {
         this.idProducto = idProducto;
         this.valorProducto = valorProducto;
         this.fechaRegistroValor = fechaRegistroValor;
         this.valorProductoEquivalente = valorProductoEquivalente;
-        this.medida = medida;
-        this.valorMedida = valorMedida;
         this.producto = producto;
     }
 
@@ -64,22 +60,6 @@ public class ValorProducto {
         this.valorProductoEquivalente = valorProductoEquivalente;
     }
 
-    public String getMedida() {
-        return medida;
-    }
-
-    public void setMedida(String medida) {
-        this.medida = medida;
-    }
-
-    public float getValorMedida() {
-        return valorMedida;
-    }
-
-    public void setValorMedida(float valorMedida) {
-        this.valorMedida = valorMedida;
-    }
-
     public Producto getProducto() {
         return producto;
     }
@@ -90,14 +70,8 @@ public class ValorProducto {
 
     @Override
     public String toString() {
-        return "ValorProducto{" +
-                "idProducto=" + idProducto +
-                ", valorProducto=" + valorProducto +
-                ", fechaRegistroValor=" + fechaRegistroValor +
-                ", valorProductoEquivalente=" + valorProductoEquivalente +
-                ", medida='" + medida + '\'' +
-                ", valorMedida=" + valorMedida +
-                ", producto=" + producto +
-                '}';
+        return "Valor: " + valorProducto +"\n"+
+                "Valor por Unidad=" + valorProductoEquivalente +"\n"+
+                "Fecha Registro=" + fechaRegistroValor;
     }
 }

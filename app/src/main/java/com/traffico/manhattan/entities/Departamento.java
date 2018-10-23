@@ -1,8 +1,9 @@
 package com.traffico.manhattan.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Departamento {
+public class Departamento implements Serializable {
 
     private int idDepartamento;
     private String descDepartamento;

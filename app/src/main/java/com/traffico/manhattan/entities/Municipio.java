@@ -1,8 +1,9 @@
 package com.traffico.manhattan.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Municipio {
+public class Municipio implements Serializable {
 
     private int idMunicipio;
     private String descMunicipio;
