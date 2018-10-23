@@ -36,7 +36,7 @@ public class EditProfileActivity extends AppCompatActivity {
             address.setText(usuario.getDireccionUsuario());
             location.setText(usuario.getCoordenadasUsuario());
             email.setText(usuario.getEmailUsuario());
-            if (!usuario.getFacebookUsuario().isEmpty()) {
+            if (usuario.getFacebookUsuario() != null) {
                 email.setEnabled(false);
             } else {
                 email.setEnabled(true);

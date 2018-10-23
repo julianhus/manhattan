@@ -69,9 +69,8 @@ public class ProductActivity extends AppCompatActivity implements OnClickListene
         MyOpenHelper dbHelper = new MyOpenHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db != null) {
-            Producto producto;
-            producto = dbHelper.getProducto(db, etBarCode.getText().toString());
-            if (!producto.toString().isEmpty()) {
+            Producto producto = dbHelper.getProducto(db, etBarCode.getText().toString());
+            if (producto.getIdProducto() != 0) {
                 etBarCode.setEnabled(false);
                 EditText etMake = findViewById(R.id.etMake);
                 etMake.setText(producto.getMarca());
@@ -79,43 +78,8 @@ public class ProductActivity extends AppCompatActivity implements OnClickListene
                 EditText etDesc = findViewById(R.id.etProduct);
                 etDesc.setText(producto.getDescProducto());
                 etDesc.setEnabled(false);
-                ArrayList<ValorProducto> valorProductos = new ArrayList<>();
-                valorProductos = dbHelper.getValorProducto(db, producto);
-                producto.setValorProducto(valorProductos);
-                Iterator<ValorProducto> vpIterator = valorProductos.iterator();
-                while (vpIterator.hasNext()) {
-                    ValorProducto valorProducto = vpIterator.next();
-                    EditText etUnitMeasure = findViewById(R.id.etUnitMeasure);
-                    etUnitMeasure.setText(valorProducto.getMedida());
-                    etUnitMeasure.setEnabled(false);
-                    EditText etWS = findViewById(R.id.etWSC);
-                    etWS.setText(valorProducto.getValorMedida() + "");
-                    etWS.setEnabled(false);
-                    EditText etEquivalentPrice = findViewById(R.id.etEquivalentPrice);
-                    etEquivalentPrice.setText(valorProducto.getValorProductoEquivalente() + "");
-                    etEquivalentPrice.setEnabled(false);
-                    EditText etRegistrationDate = findViewById(R.id.etRegistrationDate);
-                    etRegistrationDate.setText(valorProducto.getFechaRegistroValor() + "");
-                    etRegistrationDate.setEnabled(false);
-
-                }
                 bNewButton.setEnabled(false);
             } else {
-                producto = new Producto();
-                ValorProducto valorProducto = new ValorProducto();
-                producto.setBarCode(etBarCode.getText().toString());
-                EditText etMake = findViewById(R.id.etMake);
-                producto.setMarca(etMake.getText().toString());
-                EditText etDesc = findViewById(R.id.etProduct);
-                producto.setDescProducto(etDesc.getText().toString());
-                EditText etUnitMeasure = findViewById(R.id.etUnitMeasure);
-                valorProducto.setMedida(etUnitMeasure.getText().toString());
-                EditText etWS = findViewById(R.id.etWSC);
-                valorProducto.setValorMedida(Float.parseFloat(etWS.getText().toString()));
-                EditText etEquivalentPrice = findViewById(R.id.etEquivalentPrice);
-                valorProducto.setValorProductoEquivalente(Float.parseFloat(etEquivalentPrice.getText().toString()));
-                EditText etRegistrationDate = findViewById(R.id.etRegistrationDate);
-                //valorProducto.setFechaRegistroValor(Date.parse(etRegistrationDate.getText().toString()));
                 bNewButton.setEnabled(true);
             }
         }
@@ -123,6 +87,26 @@ public class ProductActivity extends AppCompatActivity implements OnClickListene
 
     public void loadProduct(View view) {
         loadProduct();
+        Button bNewProduct = findViewById(R.id.bNewProduct);
+        if (bNewProduct.isEnabled()) {
+            Producto producto = new Producto();
+            ArrayList<ValorProducto> aValorProductos = new ArrayList<>();
+            ValorProducto valorProducto = new ValorProducto();
+            producto.setBarCode(etBarCode.getText().toString());
+            EditText etMake = findViewById(R.id.etMake);
+            producto.setMarca(etMake.getText().toString());
+            EditText etDesc = findViewById(R.id.etProduct);
+            producto.setDescProducto(etDesc.getText().toString());
+            MyOpenHelper dbHelper = new MyOpenHelper(this);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            if (db != null) {
+                long flagInsert =  dbHelper.insertProduct(db, producto);
+                Toast.makeText(getBaseContext(), R.string.create, Toast.LENGTH_SHORT).show();
+                Intent storeIntent = new Intent(this, ProductListActivity.class);
+                startActivity(storeIntent);
+            }
+        }
     }
-
 }
+
+

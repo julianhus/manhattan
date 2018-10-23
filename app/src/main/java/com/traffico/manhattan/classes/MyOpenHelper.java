@@ -280,4 +280,12 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
         }
         return valorProductos;
     }
+
+    public long insertProduct(SQLiteDatabase db, Producto producto) {
+        ContentValues cv = new ContentValues();
+        cv.put("barcode", producto.getBarCode());
+        cv.put("marca", producto.getMarca());
+        cv.put("descripcion", producto.getDescProducto());
+        return db.insert("producto", null, cv);
+    }
 }
