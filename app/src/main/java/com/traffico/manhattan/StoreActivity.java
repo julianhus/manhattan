@@ -209,14 +209,15 @@ public class StoreActivity extends AppCompatActivity {
     private void cargaSpinners(SQLiteDatabase db, MyOpenHelper dbHelper) {
         ArrayList<Departamento> departamentoList = dbHelper.getDepartamentos(db);
         //
-        if (departamentoList.get(0).getIdDepartamento() == 0) {
-            departamentoList.add(0, new Departamento(0, getResources().getString(R.string.select) + " ... "));
-        }
-        //
-        Spinner sDepartamento = findViewById(R.id.sState);
-        final ArrayAdapter<Departamento> aDepartamento = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, departamentoList);
-        aDepartamento.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         try {
+            if (departamentoList.get(0).getIdDepartamento() == 0) {
+                departamentoList.add(0, new Departamento(0, getResources().getString(R.string.select) + " ... "));
+            }
+            //
+            Spinner sDepartamento = findViewById(R.id.sState);
+            final ArrayAdapter<Departamento> aDepartamento = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, departamentoList);
+            aDepartamento.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+
             sDepartamento.setAdapter(aDepartamento);
             sDepartamento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override

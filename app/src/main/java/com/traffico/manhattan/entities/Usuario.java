@@ -8,6 +8,7 @@ public class Usuario {
     private String apellidoUsuario;
     private String direccionUsuario;
     private String coordenadasUsuario;
+    private Municipio municipio;
     private String emailUsuario;
     private String facebookUsuario;
     private String googleUsuario;
@@ -71,6 +72,14 @@ public class Usuario {
 
     public void setCoordenadasUsuario(String coordenadasUsuario) {
         this.coordenadasUsuario = coordenadasUsuario;
+    }
+
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
     }
 
     public String getEmailUsuario() {

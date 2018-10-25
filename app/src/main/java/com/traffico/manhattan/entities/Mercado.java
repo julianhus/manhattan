@@ -1,21 +1,22 @@
 package com.traffico.manhattan.entities;
 
 import java.util.Date;
+import java.util.List;
 
 public class Mercado {
 
     private int idMercado;
+    private Tienda tienda;
     private Usuario usuario;
-    private Producto producto;
+    private boolean estadoMercado;
     private Date fechaRegistro;
-    private int cantidadProducto;
+    private List<MercadoProducto> mercadoProductos;
 
-    public Mercado(int idMercado, Usuario usuario, Producto producto, Date fechaRegistro, int cantidadProducto) {
-        this.idMercado = idMercado;
+    public Mercado(Tienda tienda, Usuario usuario, boolean estadoMercado, Date fechaRegistro) {
+        this.tienda = tienda;
         this.usuario = usuario;
-        this.producto = producto;
+        this.estadoMercado = estadoMercado;
         this.fechaRegistro = fechaRegistro;
-        this.cantidadProducto = cantidadProducto;
     }
 
     public int getIdMercado() {
@@ -26,6 +27,14 @@ public class Mercado {
         this.idMercado = idMercado;
     }
 
+    public Tienda getTienda() {
+        return tienda;
+    }
+
+    public void setTienda(Tienda tienda) {
+        this.tienda = tienda;
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -34,12 +43,12 @@ public class Mercado {
         this.usuario = usuario;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public boolean isEstadoMercado() {
+        return estadoMercado;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setEstadoMercado(boolean estadoMercado) {
+        this.estadoMercado = estadoMercado;
     }
 
     public Date getFechaRegistro() {
@@ -50,11 +59,23 @@ public class Mercado {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public int getCantidadProducto() {
-        return cantidadProducto;
+    public List<MercadoProducto> getMercadoProductos() {
+        return mercadoProductos;
     }
 
-    public void setCantidadProducto(int cantidadProducto) {
-        this.cantidadProducto = cantidadProducto;
+    public void setMercadoProductos(List<MercadoProducto> mercadoProductos) {
+        this.mercadoProductos = mercadoProductos;
+    }
+
+    @Override
+    public String toString() {
+        return "Mercado{" +
+                "idMercado=" + idMercado +
+                ", tienda=" + tienda +
+                ", usuario=" + usuario +
+                ", estadoMercado=" + estadoMercado +
+                ", fechaRegistro=" + fechaRegistro +
+                ", mercadoProductos=" + mercadoProductos +
+                '}';
     }
 }

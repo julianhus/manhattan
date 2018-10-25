@@ -24,7 +24,7 @@ public class EditProfileActivity extends AppCompatActivity {
         MyOpenHelper dbHelper = new MyOpenHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db != null) {
-            Usuario usuario = new Usuario();
+            Usuario usuario;
             usuario = dbHelper.getUsuario(db);
             EditText name = findViewById(R.id.eTName);
             EditText lastName = findViewById(R.id.eTLastName);
@@ -45,10 +45,9 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public void upDate(View view) {
-        Usuario usuario = new Usuario();
         EditText name = findViewById(R.id.eTName);
         usuario.setNombreUsuario(name.getText().toString());
-        EditText lastName = findViewById(R.id.eTName);
+        EditText lastName = findViewById(R.id.eTLastName);
         usuario.setApellidoUsuario(lastName.getText().toString());
         EditText address = findViewById(R.id.eTAddress);
         usuario.setDireccionUsuario(address.getText().toString());

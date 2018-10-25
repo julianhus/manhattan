@@ -9,6 +9,7 @@ public class Municipio implements Serializable {
     private String descMunicipio;
     private Departamento departamento;
     private List<Tienda> tiendas;
+    private List<Usuario> usuarios;
 
     public Municipio(int idMunicipio, String descMunicipio, Departamento departamento) {
         this.idMunicipio = idMunicipio;
@@ -50,6 +51,14 @@ public class Municipio implements Serializable {
 
     public void setTiendas(List<Tienda> tiendas) {
         this.tiendas = tiendas;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 
     @Override

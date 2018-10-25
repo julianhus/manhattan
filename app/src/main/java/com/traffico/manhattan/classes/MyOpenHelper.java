@@ -36,25 +36,29 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            db.execSQL(DEPARTAMENTO_TABLE_CREATE);
-            db.execSQL(MUNICIPIO_TABLE_CREATE);
-            db.execSQL(MUNICIPIO_INDEX_CREATE);
-            db.execSQL(TIENDA_TABLE_CREATE);
-            db.execSQL(TIENDA_INDEX_CREATE);
-            db.execSQL(TIENDA_UNIQUE_CREATE_DIRECCION);
-            db.execSQL(PRODUCTO_TABLE_CREATE);
-            db.execSQL(PRODUCTO_INDEX_UNIQUE_CREATE);
-            db.execSQL(USUARIO_TABLE_CREATE);
-            db.execSQL(USUARIO_UNIQUE_EMAIL);
-            db.execSQL(MERCADO_TABLE_CREATE);
-            db.execSQL(MERCADO_INDEX_CREATE_TIENDA_PRODUCTO);
-            db.execSQL(MERCADO_INDEX_CREATE_USUARIO);
-            db.execSQL(VALOR_PRODUCTO_TABLE_CREATE);
-            db.execSQL(VALOR_PRODUCTO_INDEX_CREATE);
-            db.execSQL(TIENDA_PRODUCTO_CREATE_TABLE);
+            db.execSQL(DEPARTAMENTO_TABLE);
+            db.execSQL(MUNICIPIO_TABLE);
+            db.execSQL(MUNICIPIO_INDEX);
+            db.execSQL(TIENDA_TABLE);
+            db.execSQL(TIENDA_INDEX);
+            db.execSQL(TIENDA_UNIQUE);
+            db.execSQL(PRODUCTO_TABLE);
+            db.execSQL(PRODUCTO_UNIQUE);
+            db.execSQL(USUARIO_TABLE);
+            db.execSQL(USUARIO_INDEX);
+            db.execSQL(USUARIO_UNIQUE);
+            db.execSQL(MERCADO_TABLE);
+            db.execSQL(MERCADO_INDEX_USUARIO);
+            db.execSQL(MERCADO_INDEX_TIENDA);
+            db.execSQL(TIENDA_PRODUCTO_TABLE);
             db.execSQL(TIENDA_PRODUCTO_INDEX_TIENDA);
-            db.execSQL(TIENDA_PRODUCTO_INDEX_PRODUCTO);
+            db.execSQL(TIENDA_PRODUCTO_PRODUCTO);
             db.execSQL(TIENDA_PRODUCTO_UNIQUE);
+            db.execSQL(VALOR_PRODUCTO_TABLE);
+            db.execSQL(VALOR_PRODUCTO_INDEX);
+            db.execSQL(MERCADO_PRODUCTO_TABLE);
+            db.execSQL(MERCADO_PRODUCTO_INDEX_MERCADO);
+            db.execSQL(MERCADO_PRODUCTO_INDEX_VALOR_PRODUCTO);
             db.execSQL(CARGA_DEPARTAMENTOS);
             db.execSQL(CARGA_MUNICIPIOS_AMAZONAS);
             db.execSQL(CARGA_MUNICIPIOS_ANTIOQUIA);
@@ -134,9 +138,10 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
             usuario.setApellidoUsuario(cursor.getString(2));
             usuario.setDireccionUsuario(cursor.getString(3));
             usuario.setCoordenadasUsuario(cursor.getString(4));
-            usuario.setEmailUsuario(cursor.getString(5));
-            usuario.setFacebookUsuario(cursor.getString(6));
-            usuario.setGoogleUsuario(cursor.getString(7));
+            //
+            usuario.setEmailUsuario(cursor.getString(6));
+            usuario.setFacebookUsuario(cursor.getString(7));
+            usuario.setGoogleUsuario(cursor.getString(8));
             cursor.moveToLast();
         }
         return usuario;
@@ -235,20 +240,20 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
 
     public Producto getProducto(SQLiteDatabase db, String scanContent) {
         Producto producto = new Producto();
-        String[] args = new String[]{scanContent};
+        /*String[] args = new String[]{scanContent};
         Cursor cursor = db.rawQuery(" SELECT * FROM producto WHERE barcode = ? ", args);
         while (cursor.moveToNext()) {
             producto.setIdProducto(cursor.getInt(0));
             producto.setBarCode(cursor.getString(1));
             producto.setMarca(cursor.getString(2));
             producto.setDescProducto(cursor.getString(3));
-        }
+        }*/
         return producto;
     }
 
     public List<Producto> getProductos(SQLiteDatabase db) {
         ArrayList<Producto> productos = new ArrayList<Producto>();
-        Cursor cursor = db.rawQuery(QRY_SEARCH_PRODUCT, null);
+        /*Cursor cursor = db.rawQuery(QRY_SEARCH_PRODUCT, null);
         while (cursor.moveToNext()) {
             Producto producto = new Producto();
             producto.setIdProducto(cursor.getInt(0));
@@ -257,13 +262,13 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
             producto.setDescProducto(cursor.getString(3));
             producto.setValorProducto(getValorProducto(db,producto));
             productos.add(producto);
-        }
+        }*/
         return productos;
     }
 
     public ArrayList<ValorProducto> getValorProducto(SQLiteDatabase db, Producto producto) {
         ArrayList<ValorProducto> valorProductos = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select p.id_producto, vp.valor_producto, vp.valor_producto_equivalente, vp.fecha_registro_valor " +
+        /*Cursor cursor = db.rawQuery("select p.id_producto, vp.valor_producto, vp.valor_producto_equivalente, vp.fecha_registro_valor " +
                 " from producto p left outer join valor_producto vp on vp.id_producto = p.id_producto " +
                 " where p.id_producto = " + producto.getIdProducto() +
                 " order by vp.fecha_registro_valor", null);
@@ -274,15 +279,16 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
             valorProducto.setValorProductoEquivalente(cursor.getFloat(3));
             //valorProducto.setFechaRegistroValor(cursor.getString(5));
             valorProductos.add(valorProducto);
-        }
+        }*/
         return valorProductos;
     }
 
     public long insertProduct(SQLiteDatabase db, Producto producto) {
-        ContentValues cv = new ContentValues();
+        /*ContentValues cv = new ContentValues();
         cv.put("barcode", producto.getBarCode());
         cv.put("marca", producto.getMarca());
         cv.put("descripcion", producto.getDescProducto());
-        return db.insert("producto", null, cv);
+        return db.insert("producto", null, cv);*/
+        return 0;
     }
 }

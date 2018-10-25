@@ -73,14 +73,14 @@ public class ProductDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (producto != null) {
             //((TextView) rootView.findViewById(R.id.product_detail)).setText(mItem.details);
-            ((TextView) rootView.findViewById(R.id.txtmarca)).setText(producto.getMarca());
+            /*((TextView) rootView.findViewById(R.id.txtmarca)).setText(producto.getMarca());
             ((TextView) rootView.findViewById(R.id.txtdesc)).setText(producto.getDescProducto());
             ((TextView) rootView.findViewById(R.id.txtbarcode)).setText(producto.getBarCode());
             //
             ArrayList<ValorProducto> lValorProducto = (ArrayList<ValorProducto>) producto.getValorProductos();
             ArrayAdapter<ValorProducto> aValorProducto = new ArrayAdapter<ValorProducto>(this.getContext(), android.R.layout.simple_list_item_1, lValorProducto);
             ListView lvValorProducto  = (ListView)rootView.findViewById(R.id.lvValorProducto);
-            lvValorProducto.setAdapter(aValorProducto);
+            lvValorProducto.setAdapter(aValorProducto);*/
             //
         }
         return rootView;

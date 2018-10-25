@@ -1,39 +1,31 @@
 package com.traffico.manhattan.entities;
 
 import java.util.Date;
+import java.util.List;
 
 public class ValorProducto {
 
-    private int idProducto;
+    private TiendaProducto idTiendaProducto;
     private float valorProducto;
-    private Date fechaRegistroValor;
     private float valorProductoEquivalente;
-    private Producto producto;
-
-    public ValorProducto(int idProducto, float valorProducto, Date fechaRegistroValor) {
-        this.idProducto = idProducto;
-        this.valorProducto = valorProducto;
-        this.fechaRegistroValor = fechaRegistroValor;
-    }
-
-    public ValorProducto(int idProducto, float valorProducto, Date fechaRegistroValor, float valorProductoEquivalente, Producto producto) {
-        this.idProducto = idProducto;
-        this.valorProducto = valorProducto;
-        this.fechaRegistroValor = fechaRegistroValor;
-        this.valorProductoEquivalente = valorProductoEquivalente;
-        this.producto = producto;
-    }
+    private Date fechaRegistroValor;
+    private List<MercadoProducto> mercadoProductos;
 
     public ValorProducto() {
-
     }
 
-    public int getIdProducto() {
-        return idProducto;
+    public ValorProducto(TiendaProducto idTiendaProducto, float valorProducto, Date fechaRegistroValor) {
+        this.idTiendaProducto = idTiendaProducto;
+        this.valorProducto = valorProducto;
+        this.fechaRegistroValor = fechaRegistroValor;
     }
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
+    public TiendaProducto getIdTiendaProducto() {
+        return idTiendaProducto;
+    }
+
+    public void setIdTiendaProducto(TiendaProducto idTiendaProducto) {
+        this.idTiendaProducto = idTiendaProducto;
     }
 
     public float getValorProducto() {
@@ -44,14 +36,6 @@ public class ValorProducto {
         this.valorProducto = valorProducto;
     }
 
-    public Date getFechaRegistroValor() {
-        return fechaRegistroValor;
-    }
-
-    public void setFechaRegistroValor(Date fechaRegistroValor) {
-        this.fechaRegistroValor = fechaRegistroValor;
-    }
-
     public float getValorProductoEquivalente() {
         return valorProductoEquivalente;
     }
@@ -60,12 +44,20 @@ public class ValorProducto {
         this.valorProductoEquivalente = valorProductoEquivalente;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public Date getFechaRegistroValor() {
+        return fechaRegistroValor;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setFechaRegistroValor(Date fechaRegistroValor) {
+        this.fechaRegistroValor = fechaRegistroValor;
+    }
+
+    public List<MercadoProducto> getMercadoProductos() {
+        return mercadoProductos;
+    }
+
+    public void setMercadoProductos(List<MercadoProducto> mercadoProductos) {
+        this.mercadoProductos = mercadoProductos;
     }
 
     @Override

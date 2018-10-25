@@ -10,9 +10,8 @@ public class Producto {
     private String descProducto;
     private String medida;
     private float valorMedida;
+    private List<TiendaProducto> tiendaProductos;
 
-    private List<ValorProducto> valorProductos;
-    private List<Mercado> mercados;
 
     public Producto(int idProducto, String barCode, String marca, String descProducto, List<ValorProducto> valorProductos) {
         this.idProducto = idProducto;
@@ -20,7 +19,6 @@ public class Producto {
         this.marca = marca;
         this.descProducto = descProducto;
 
-        this.valorProductos = valorProductos;
     }
 
     public Producto(int idProducto, String barCode, String marca, String descProducto) {
@@ -82,20 +80,12 @@ public class Producto {
         this.valorMedida = valorMedida;
     }
 
-    public List<ValorProducto> getValorProductos() {
-        return valorProductos;
+    public List<TiendaProducto> getTiendaProductos() {
+        return tiendaProductos;
     }
 
-    public void setValorProducto(List<ValorProducto> valorProductos) {
-        this.valorProductos = valorProductos;
-    }
-
-    public List<Mercado> getMercados() {
-        return mercados;
-    }
-
-    public void setMercados(List<Mercado> mercados) {
-        this.mercados = mercados;
+    public void setTiendaProductos(List<TiendaProducto> tiendaProductos) {
+        this.tiendaProductos = tiendaProductos;
     }
 
     @Override

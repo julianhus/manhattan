@@ -10,7 +10,8 @@ public class Tienda implements Serializable {
     private String direccionTienda;
     private String coordenadasTienda;
     private Municipio municipio;
-    private List<Producto> productos;
+    private List<TiendaProducto> tiendaProductos;
+    private List<Mercado> mercados;
 
 
     public Tienda(int idTienda, String descTienda, String direccionTienda, Municipio municipio) {
@@ -72,12 +73,20 @@ public class Tienda implements Serializable {
         this.municipio = municipio;
     }
 
-    public List<Producto> getProductos() {
-        return productos;
+    public List<TiendaProducto> getTiendaProductos() {
+        return tiendaProductos;
     }
 
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
+    public void setTiendaProductos(List<TiendaProducto> tiendaProductos) {
+        this.tiendaProductos = tiendaProductos;
+    }
+
+    public List<Mercado> getMercados() {
+        return mercados;
+    }
+
+    public void setMercados(List<Mercado> mercados) {
+        this.mercados = mercados;
     }
 
     @Override

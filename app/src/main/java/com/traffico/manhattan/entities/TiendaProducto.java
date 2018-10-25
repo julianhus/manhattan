@@ -1,11 +1,27 @@
 package com.traffico.manhattan.entities;
 
 public class TiendaProducto {
-    Producto producto;
-    Tienda tienda;
 
-    public TiendaProducto(Producto producto, Tienda tienda) {
-        this.producto = producto;
+    private int idTiendaProducto;
+    Tienda tienda;
+    Producto producto;
+
+    public TiendaProducto() {
+    }
+
+    public int getIdTiendaProducto() {
+        return idTiendaProducto;
+    }
+
+    public void setIdTiendaProducto(int idTiendaProducto) {
+        this.idTiendaProducto = idTiendaProducto;
+    }
+
+    public Tienda getTienda() {
+        return tienda;
+    }
+
+    public void setTienda(Tienda tienda) {
         this.tienda = tienda;
     }
 
@@ -17,11 +33,12 @@ public class TiendaProducto {
         this.producto = producto;
     }
 
-    public Tienda getTienda() {
-        return tienda;
-    }
-
-    public void setTienda(Tienda tienda) {
-        this.tienda = tienda;
+    @Override
+    public String toString() {
+        return "TiendaProducto{" +
+                "idTiendaProducto=" + idTiendaProducto +
+                ", tienda=" + tienda +
+                ", producto=" + producto +
+                '}';
     }
 }
