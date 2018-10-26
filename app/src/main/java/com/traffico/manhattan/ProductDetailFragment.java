@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.traffico.manhattan.classes.ProductContent;
 import com.traffico.manhattan.entities.Producto;
 import com.traffico.manhattan.entities.Tienda;
+import com.traffico.manhattan.entities.TiendaProducto;
 import com.traffico.manhattan.entities.ValorProducto;
 
 import java.util.ArrayList;
@@ -73,11 +74,21 @@ public class ProductDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (producto != null) {
             //((TextView) rootView.findViewById(R.id.product_detail)).setText(mItem.details);
-            /*((TextView) rootView.findViewById(R.id.txtmarca)).setText(producto.getMarca());
+            ((TextView) rootView.findViewById(R.id.txtmarca)).setText(producto.getMarca());
             ((TextView) rootView.findViewById(R.id.txtdesc)).setText(producto.getDescProducto());
+            ((TextView) rootView.findViewById(R.id.txtMeasure)).setText(producto.getMedida());
+            ((TextView) rootView.findViewById(R.id.txtWeight)).setText("" + producto.getValorMedida());
             ((TextView) rootView.findViewById(R.id.txtbarcode)).setText(producto.getBarCode());
             //
-            ArrayList<ValorProducto> lValorProducto = (ArrayList<ValorProducto>) producto.getValorProductos();
+            ArrayList<TiendaProducto> lTiendaProducto = new ArrayList<TiendaProducto>();
+            lTiendaProducto = (ArrayList<TiendaProducto>) producto.getTiendaProductos();
+            if (lTiendaProducto  != null) {
+                ArrayAdapter<TiendaProducto> aTiendaProducto = new ArrayAdapter<TiendaProducto>(this.getContext(), android.R.layout.simple_list_item_1, lTiendaProducto);
+                ListView lvTiendaProducto = (ListView) rootView.findViewById(R.id.lvValorProducto);
+                lvTiendaProducto.setAdapter(aTiendaProducto);
+            }
+            //
+            /*ArrayList<ValorProducto> lValorProducto = (ArrayList<ValorProducto>) producto.getValorProductos();
             ArrayAdapter<ValorProducto> aValorProducto = new ArrayAdapter<ValorProducto>(this.getContext(), android.R.layout.simple_list_item_1, lValorProducto);
             ListView lvValorProducto  = (ListView)rootView.findViewById(R.id.lvValorProducto);
             lvValorProducto.setAdapter(aValorProducto);*/

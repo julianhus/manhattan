@@ -14,11 +14,10 @@ import android.widget.Toast;
 
 import com.traffico.manhattan.classes.MyOpenHelper;
 import com.traffico.manhattan.entities.Producto;
-import com.traffico.manhattan.entities.ValorProducto;
 import com.traffico.manhattan.google.zxing.integration.android.IntentIntegrator;
 import com.traffico.manhattan.google.zxing.integration.android.IntentResult;
 
-import java.util.ArrayList;
+
 
 
 public class ProductActivity extends AppCompatActivity implements OnClickListener {
@@ -75,6 +74,13 @@ public class ProductActivity extends AppCompatActivity implements OnClickListene
                 EditText etDesc = findViewById(R.id.etProduct);
                 etDesc.setText(producto.getDescProducto());
                 etDesc.setEnabled(false);
+                EditText etMeasure = findViewById(R.id.etMeasure);
+                etMeasure.setText(producto.getMedida());
+                etMeasure.setEnabled(false);
+                EditText etWeight = findViewById(R.id.etWeight);
+                etWeight.setText("" + producto.getValorMedida());
+                etWeight.setEnabled(false);
+
                 bNewButton.setEnabled(false);
             } else {
                 bNewButton.setEnabled(true);
@@ -87,17 +93,19 @@ public class ProductActivity extends AppCompatActivity implements OnClickListene
         Button bNewProduct = findViewById(R.id.bNewProduct);
         if (bNewProduct.isEnabled()) {
             Producto producto = new Producto();
-            ArrayList<ValorProducto> aValorProductos = new ArrayList<>();
-            ValorProducto valorProducto = new ValorProducto();
             producto.setBarCode(etBarCode.getText().toString());
             EditText etMake = findViewById(R.id.etMake);
             producto.setMarca(etMake.getText().toString());
             EditText etDesc = findViewById(R.id.etProduct);
             producto.setDescProducto(etDesc.getText().toString());
+            EditText etMeasure = findViewById(R.id.etMeasure);
+            producto.setMedida(etMeasure.getText().toString());
+            EditText etWeight = findViewById(R.id.etWeight);
+            producto.setValorMedida(Float.parseFloat(etWeight.getText().toString()));
             MyOpenHelper dbHelper = new MyOpenHelper(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             if (db != null) {
-                long flagInsert =  dbHelper.insertProduct(db, producto);
+                long flagInsert = dbHelper.insertProduct(db, producto);
                 Toast.makeText(getBaseContext(), R.string.create, Toast.LENGTH_SHORT).show();
                 Intent storeIntent = new Intent(this, ProductListActivity.class);
                 startActivity(storeIntent);

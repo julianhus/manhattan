@@ -96,7 +96,7 @@
 
     <Button
         android:id="@+id/bNewProduct"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -105,7 +105,7 @@
         android:text="@string/new_product"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/etWeight" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"
@@ -120,9 +120,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/unit_measure"
-        app:layout_constraintBottom_toBottomOf="@+id/editText"
+        app:layout_constraintBottom_toBottomOf="@+id/etMeasure"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editText" />
+        app:layout_constraintTop_toTopOf="@+id/etMeasure" />
 
     <TextView
         android:id="@+id/textView15"
@@ -130,12 +130,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/weight_size_capacity"
-        app:layout_constraintBottom_toBottomOf="@+id/editText2"
+        app:layout_constraintBottom_toBottomOf="@+id/etWeight"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editText2" />
+        app:layout_constraintTop_toTopOf="@+id/etWeight" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/etMeasure"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -150,7 +150,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etProduct" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/etWeight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -162,6 +162,6 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/etMeasure" />
 
 </android.support.constraint.ConstraintLayout>

@@ -12,6 +12,7 @@ import com.traffico.manhattan.entities.Departamento;
 import com.traffico.manhattan.entities.Municipio;
 import com.traffico.manhattan.entities.Producto;
 import com.traffico.manhattan.entities.Tienda;
+import com.traffico.manhattan.entities.TiendaProducto;
 import com.traffico.manhattan.entities.Usuario;
 import com.traffico.manhattan.entities.ValorProducto;
 import com.traffico.manhattan.interfaces.StringsCreacion;
@@ -24,10 +25,10 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
     private static final String DB_NAME = "manhattan.sqlite";
     private static final int DB_VERSION = 1;
     //
-    private static final String QRY_SEARCH_USER = "select * from usuario";
+    private static final String QRY_SEARCH_STATE = "select d.id_departamento, d.desc_departamento, m.id_municipio, m.desc_municipio from departamento d left outer join municipio m on m.id_departamento = d.id_departamento";
+    private static final String QRY_SEARCH_COUTRY = "";
+    private static final String QRY_SEARCH_USER = "select u.id_usuario, u.nombre_usuario, u.apellido_usuario, u.direccion_usuario, u.coordenadas_usuario, u.e_mail_usuario, u.facebook, u.google,  m.id_municipio,m.desc_municipio, d.id_departamento, d.desc_departamento from usuario u left outer join municipio m on m.id_municipio = u.id_municipio left outer join departamento d on d.id_departamento = m.id_departamento";
     private static final String QRY_SEARCH_STORE = "select t.id_tienda, t.desc_tienda, t.direccion_tienda, t.coordenadas_tienda, m.id_municipio, m.desc_municipio, d.id_departamento, d.desc_departamento from tienda t left outer join municipio m on m.id_municipio = t.id_municipio left outer join departamento d on d.id_departamento = m.id_departamento";
-    private static final String QRY_SEARCH_STATE = "select d.id_departamento, d.desc_departamento, m.id_departamento, m.id_municipio, m.desc_municipio from departamento d left outer join municipio m on m.id_departamento = d.id_departamento";
-    private static final String QRY_SEARCH_PRODUCT = "select * from producto";
 
     public MyOpenHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -139,9 +140,9 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
             usuario.setDireccionUsuario(cursor.getString(3));
             usuario.setCoordenadasUsuario(cursor.getString(4));
             //
-            usuario.setEmailUsuario(cursor.getString(6));
-            usuario.setFacebookUsuario(cursor.getString(7));
-            usuario.setGoogleUsuario(cursor.getString(8));
+            usuario.setEmailUsuario(cursor.getString(5));
+            usuario.setFacebookUsuario(cursor.getString(6));
+            usuario.setGoogleUsuario(cursor.getString(7));
             cursor.moveToLast();
         }
         return usuario;
@@ -193,8 +194,8 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
                 departamento.setDescDepartamento(cursor.getString(1));
                 municipio = new Municipio();
                 municipio.setDepartamento(departamento);
-                municipio.setIdMunicipio(cursor.getInt(3));
-                municipio.setDescMunicipio(cursor.getString(4));
+                municipio.setIdMunicipio(cursor.getInt(2));
+                municipio.setDescMunicipio(cursor.getString(3));
                 municipios.add(municipio);
                 flagStateChange = departamento.getIdDepartamento();
             } else {
@@ -206,8 +207,8 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
                 municipios = new ArrayList<>();
                 municipio = new Municipio();
                 municipio.setDepartamento(departamento);
-                municipio.setIdMunicipio(cursor.getInt(3));
-                municipio.setDescMunicipio(cursor.getString(4));
+                municipio.setIdMunicipio(cursor.getInt(2));
+                municipio.setDescMunicipio(cursor.getString(3));
                 municipios.add(municipio);
                 flagStateChange = departamento.getIdDepartamento();
             }
@@ -240,30 +241,73 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
 
     public Producto getProducto(SQLiteDatabase db, String scanContent) {
         Producto producto = new Producto();
-        /*String[] args = new String[]{scanContent};
+        String[] args = new String[]{scanContent};
         Cursor cursor = db.rawQuery(" SELECT * FROM producto WHERE barcode = ? ", args);
         while (cursor.moveToNext()) {
             producto.setIdProducto(cursor.getInt(0));
             producto.setBarCode(cursor.getString(1));
             producto.setMarca(cursor.getString(2));
             producto.setDescProducto(cursor.getString(3));
-        }*/
+            producto.setMedida(cursor.getString(4));
+            producto.setValorMedida(cursor.getFloat(5));
+        }
         return producto;
     }
 
     public List<Producto> getProductos(SQLiteDatabase db) {
         ArrayList<Producto> productos = new ArrayList<Producto>();
-        /*Cursor cursor = db.rawQuery(QRY_SEARCH_PRODUCT, null);
-        while (cursor.moveToNext()) {
+        Cursor cProductos = db.rawQuery("select * from producto", null);
+        while (cProductos.moveToNext()) {
             Producto producto = new Producto();
-            producto.setIdProducto(cursor.getInt(0));
-            producto.setBarCode(cursor.getString(1));
-            producto.setMarca(cursor.getString(2));
-            producto.setDescProducto(cursor.getString(3));
-            producto.setValorProducto(getValorProducto(db,producto));
+            producto.setIdProducto(cProductos.getInt(0));
+            producto.setBarCode(cProductos.getString(1));
+            producto.setMarca(cProductos.getString(2));
+            producto.setDescProducto(cProductos.getString(3));
+            producto.setMedida(cProductos.getString(4));
+            producto.setValorMedida(cProductos.getFloat(5));
+            //
+            ArrayList<TiendaProducto> tiendaProductos = new ArrayList<>();
+            String[] arguments = new String[]{"" + producto.getIdProducto()};
+            Cursor cTiendaProducto = db.rawQuery("select * from tienda_producto where id_producto = ?", arguments);
+            while (cTiendaProducto.moveToNext()) {
+                TiendaProducto tiendaProducto = new TiendaProducto();
+                tiendaProducto.setIdTiendaProducto(cTiendaProducto.getInt(0));
+                //
+                Tienda tienda = new Tienda();
+                tienda.setIdTienda(cTiendaProducto.getInt(1));
+                tienda = getTienda(db, tienda);
+                tiendaProducto.setTienda(tienda);
+                //
+                tiendaProducto.setProducto(producto);
+                //
+                ArrayList<ValorProducto> valorProductos = new ArrayList<>();
+                Cursor cValorProducto = db.rawQuery("select * from valor_produto where id_tienda_prodcuto = ? ", new String[]{"" + tiendaProducto.getIdTiendaProducto()});
+                while (cValorProducto.moveToNext()) {
+                    ValorProducto valorProducto = new ValorProducto();
+                    valorProducto.setIdTiendaProducto(tiendaProducto);
+                    valorProducto.setValorProducto(cValorProducto.getFloat(1));
+                    valorProducto.setValorProductoEquivalente(cValorProducto.getFloat(2));
+                    //valorProducto.setFechaRegistroValor(); pendiente revisar fechas
+                    valorProductos.add(valorProducto);
+                }
+                tiendaProductos.add(tiendaProducto);
+            }
             productos.add(producto);
-        }*/
+        }
         return productos;
+    }
+
+    private Tienda getTienda(SQLiteDatabase db, Tienda tienda) {
+        Cursor cTienda = db.rawQuery("select * from tienda where id_tienda = ?", new String[]{"" + tienda.getIdTienda()});
+        while (cTienda.moveToNext()) {
+            tienda.setDescTienda(cTienda.getString(1));
+            tienda.setDireccionTienda(cTienda.getString(2));
+            tienda.setCoordenadasTienda(cTienda.getString(3));
+            Municipio municipio = new Municipio();
+            municipio.setIdMunicipio(cTienda.getInt(4));
+            tienda.setMunicipio(municipio);
+        }
+        return tienda;
     }
 
     public ArrayList<ValorProducto> getValorProducto(SQLiteDatabase db, Producto producto) {
@@ -284,11 +328,12 @@ public class MyOpenHelper extends SQLiteOpenHelper implements StringsCreacion {
     }
 
     public long insertProduct(SQLiteDatabase db, Producto producto) {
-        /*ContentValues cv = new ContentValues();
+        ContentValues cv = new ContentValues();
         cv.put("barcode", producto.getBarCode());
         cv.put("marca", producto.getMarca());
         cv.put("descripcion", producto.getDescProducto());
-        return db.insert("producto", null, cv);*/
-        return 0;
+        cv.put("medida", producto.getMedida());
+        cv.put("valor_medida", producto.getValorMedida());
+        return db.insert("producto", null, cv);
     }
 }
